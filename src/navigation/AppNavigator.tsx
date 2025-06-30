@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import KYCWelcomeScreen from '../components/KYCWelcomeScreen';
 import CountrySelectionScreen from '../components/CountrySelectionScreen';
 import AddressInputScreen from '../components/AddressInputScreen';
+import LegalAddressScreen from '../components/LegalAddressScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,10 @@ const AppNavigator = () => {
         <Stack.Screen 
           name="AddressInput" 
           component={AddressInputScreen} 
+        />
+        <Stack.Screen 
+          name="LegalAddress" 
+          component={LegalAddressScreen} 
         />
       </Stack.Navigator>
     </NavigationContainer>
