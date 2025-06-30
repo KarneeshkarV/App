@@ -22,6 +22,22 @@ const BirthdayScreen = ({ navigation }) => {
   const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
+    const { day, month, year } = dob;
+    const dayNum = parseInt(day, 10);
+    const monthNum = parseInt(month, 10);
+    const yearNum = parseInt(year, 10);
+    const currentYear = new Date().getFullYear();
+
+    if (
+      !dayNum || !monthNum || !yearNum ||
+      dayNum < 1 || dayNum > 31 ||
+      monthNum < 1 || monthNum > 12 ||
+      yearNum < 1900 || yearNum > currentYear
+    ) {
+      Alert.alert('Invalid Date', 'Please enter a valid date of birth.');
+      return;
+    }
+
     // Navigate to the next screen
     console.log('DOB:', dob);
     navigation.navigate('PhoneNumber');

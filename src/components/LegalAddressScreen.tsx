@@ -38,19 +38,8 @@ const LegalAddressScreen = ({ navigation, route }) => {
       return;
     }
     
-    Alert.alert(
-      'Legal Address Saved',
-      'Your legal address has been successfully saved.',
-      [
-        {
-          text: 'Continue',
-          onPress: () => {
-            console.log('Address data:', addressData);
-            navigation.navigate('Birthday');
-          },
-        },
-      ]
-    );
+    console.log('Address data:', addressData);
+    navigation.navigate('Birthday');
   };
 
   const handleSkip = () => {

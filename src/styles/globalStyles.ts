@@ -106,3 +106,4 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
   },
 });
+
