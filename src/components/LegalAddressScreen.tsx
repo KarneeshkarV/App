@@ -14,6 +14,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import GlassCard from './GlassCard';
 
 const LegalAddressScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
@@ -22,60 +23,55 @@ const LegalAddressScreen = ({ navigation, route }) => {
     city: '',
     state: '',
     zipCode: '',
-    country: selectedCountry?.label?.replace('🇦🇪 ', '') || 'United Arab Emirates',
+    country:
+      selectedCountry?.label?.replace('🇦🇪 ', '') ||
+      'United Arab Emirates',
   });
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
+  const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
-    const requiredFields = ['street', 'city', 'state', 'zipCode'];
-    const missingFields = requiredFields.filter(field => !addressData[field].trim());
-    
-    if (missingFields.length > 0) {
-      Alert.alert('Please fill all required fields', 'All address fields are required to continue.');
+    const required = ['street', 'city', 'state', 'zipCode'];
+    const missing = required.filter(
+      (f) => !addressData[f].trim()
+    );
+    if (missing.length > 0) {
+      Alert.alert(
+        'Please fill all required fields',
+        'All address fields are required to continue.'
+      );
       return;
     }
-    
-    Alert.alert(
-      'Legal Address Saved',
-      'Your legal address has been successfully saved.',
-      [
-        {
-          text: 'Continue',
-          onPress: () => {
-            console.log('Address data:', addressData);
-            // Navigate to next screen here
-          },
-        },
-      ]
-    );
+    Alert.alert('Legal Address Saved', '', [
+      {
+        text: 'Continue',
+        onPress: () =>
+          console.log('Address data:', addressData),
+      },
+    ]);
   };
 
   const handleSkip = () => {
     console.log('Skip legal address');
-    // Navigate to next screen
   };
 
-  const updateField = (field, value) => {
-    setAddressData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
+  const updateField = (field: string, val: string) => {
+    setAddressData((prev) => ({ ...prev, [field]: val }));
   };
 
-  const isFormValid = () => {
-    return addressData.street.trim() && 
-           addressData.city.trim() && 
-           addressData.state.trim() && 
-           addressData.zipCode.trim();
-  };
+  const isFormValid = () =>
+    addressData.street.trim() &&
+    addressData.city.trim() &&
+    addressData.state.trim() &&
+    addressData.zipCode.trim();
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
+      <StatusBar
+        backgroundColor={colors.primary}
+        barStyle="light-content"
+      />
+
       <LinearGradient
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
@@ -84,117 +80,147 @@ const LegalAddressScreen = ({ navigation, route }) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             onPress={handleBack}
           >
-            <Ionicons name="arrow-back" size={24} color={colors.white} />
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color={colors.white}
+            />
           </TouchableOpacity>
-          
+
           <Text style={styles.stepText}>Step 2/11</Text>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
-            <Text style={styles.skipHeaderText}>Save & Skip</Text>
+
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
+            <Text style={styles.skipHeaderText}>
+              Save & Skip
+            </Text>
           </TouchableOpacity>
         </View>
 
-        {/* Content */}
-        <KeyboardAvoidingView 
+        <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={
+            Platform.OS === 'ios' ? 'padding' : 'height'
+          }
         >
-          <ScrollView 
+          <ScrollView
             style={{ flex: 1 }}
-            showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}
+            showsVerticalScrollIndicator={false}
           >
-            <View style={[globalStyles.card, { marginTop: 40, flex: 1 }]}>
-              <Text style={globalStyles.title}>What's your legal address?</Text>
+            {/* Glass Card */}
+            <GlassCard style={{ marginTop: 40, flex: 1 }}>
+              <Text style={globalStyles.title}>
+                What's your legal address?
+              </Text>
               <Text style={globalStyles.subtitle}>
                 Type your address
               </Text>
 
-              {/* Address Input Fields */}
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
                   placeholder="Address (Area and Street)"
                   placeholderTextColor={colors.gray}
                   value={addressData.street}
-                  onChangeText={(value) => updateField('street', value)}
-                  multiline={true}
+                  onChangeText={(v) => updateField('street', v)}
+                  multiline
                   numberOfLines={2}
                 />
-                
+
                 <TextInput
                   style={styles.input}
                   placeholder="City/ District/ Town"
                   placeholderTextColor={colors.gray}
                   value={addressData.city}
-                  onChangeText={(value) => updateField('city', value)}
+                  onChangeText={(v) => updateField('city', v)}
                 />
-                
+
                 <TextInput
                   style={styles.input}
                   placeholder="State"
                   placeholderTextColor={colors.gray}
                   value={addressData.state}
-                  onChangeText={(value) => updateField('state', value)}
+                  onChangeText={(v) => updateField('state', v)}
                 />
-                
+
                 <View style={styles.zipCodeContainer}>
-                  <Text style={styles.zipCodeLabel}>Zip Code</Text>
+                  <Text style={styles.zipCodeLabel}>
+                    Zip Code
+                  </Text>
                   <TextInput
                     style={[styles.input, { marginTop: 8 }]}
                     placeholder="Enter your zipcode"
                     placeholderTextColor={colors.gray}
                     value={addressData.zipCode}
-                    onChangeText={(value) => updateField('zipCode', value)}
+                    onChangeText={(v) =>
+                      updateField('zipCode', v)
+                    }
                     keyboardType="numeric"
                   />
                 </View>
-                
+
                 <View style={styles.countryContainer}>
-                  <Text style={styles.countryLabel}>Country</Text>
+                  <Text style={styles.countryLabel}>
+                    Country
+                  </Text>
                   <TextInput
                     style={[styles.input, { marginTop: 8 }]}
                     placeholder="Enter your country"
                     placeholderTextColor={colors.gray}
                     value={addressData.country}
-                    onChangeText={(value) => updateField('country', value)}
+                    onChangeText={(v) =>
+                      updateField('country', v)
+                    }
                   />
                 </View>
               </View>
 
-              {/* Next Button */}
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[
                   globalStyles.button,
-                  { 
-                    backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                    marginTop: 20 
-                  }
-                ]} 
+                  {
+                    backgroundColor: isFormValid()
+                      ? colors.primary
+                      : colors.lightGray,
+                    marginTop: 20,
+                  },
+                ]}
                 onPress={handleNext}
-                activeOpacity={0.8}
                 disabled={!isFormValid()}
+                activeOpacity={0.8}
               >
-                <Text style={[
-                  globalStyles.buttonText,
-                  { color: isFormValid() ? colors.white : colors.gray }
-                ]}>
+                <Text
+                  style={[
+                    globalStyles.buttonText,
+                    {
+                      color: isFormValid()
+                        ? colors.white
+                        : colors.gray,
+                    },
+                  ]}
+                >
                   Next
                 </Text>
               </TouchableOpacity>
 
-              {/* Privacy Link */}
-              <TouchableOpacity style={styles.privacyContainer}>
+              <TouchableOpacity
+                style={styles.privacyContainer}
+              >
                 <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
+                  <Text style={styles.privacyLink}>
+                    Learn more
+                  </Text>{' '}
+                  here about how we protect your privacy.
                 </Text>
               </TouchableOpacity>
-            </View>
+            </GlassCard>
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
@@ -215,7 +241,7 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },

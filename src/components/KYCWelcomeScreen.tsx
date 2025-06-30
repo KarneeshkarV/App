@@ -9,14 +9,11 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import GlassCard from './GlassCard';
 
 const KYCWelcomeScreen = ({ navigation }) => {
   const documents = [
-    {
-      id: 1,
-      title: 'Emirates ID card',
-      icon: 'card-outline',
-    },
+    { id: 1, title: 'Emirates ID card', icon: 'card-outline' },
     {
       id: 2,
       title: 'Keep your Passport/Government ID Card',
@@ -29,14 +26,16 @@ const KYCWelcomeScreen = ({ navigation }) => {
   };
 
   const handleSkip = () => {
-    // Handle skip functionality
     console.log('Skip KYC');
   };
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
+      <StatusBar
+        backgroundColor={colors.primary}
+        barStyle="light-content"
+      />
+
       <LinearGradient
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
@@ -45,14 +44,21 @@ const KYCWelcomeScreen = ({ navigation }) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color={colors.white} />
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color={colors.white}
+            />
           </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Skip</Text>
           </TouchableOpacity>
         </View>
@@ -60,44 +66,51 @@ const KYCWelcomeScreen = ({ navigation }) => {
         {/* Logo */}
         <View style={styles.logoContainer}>
           <View style={styles.logoWrapper}>
-            <Ionicons name="shield-checkmark" size={60} color={colors.primary} />
+            <Ionicons
+              name="shield-checkmark"
+              size={60}
+              color={colors.primary}
+            />
           </View>
         </View>
 
-        {/* Content Card */}
-        <View style={globalStyles.card}>
+        {/* Glass Card */}
+        <GlassCard>
           <Text style={globalStyles.title}>Let's Verify KYC</Text>
           <Text style={globalStyles.subtitle}>
             Keep the following documents ready
           </Text>
 
-          {/* Document List */}
           <View style={styles.documentsContainer}>
-            {documents.map((document) => (
-              <View key={document.id} style={globalStyles.documentItem}>
+            {documents.map((doc) => (
+              <View
+                key={doc.id}
+                style={globalStyles.documentItem}
+              >
                 <View style={globalStyles.documentIcon}>
-                  <Ionicons 
-                    name={document.icon} 
-                    size={20} 
-                    color={colors.white} 
+                  <Ionicons
+                    name={doc.icon}
+                    size={20}
+                    color={colors.white}
                   />
                 </View>
                 <Text style={globalStyles.documentText}>
-                  {document.title}
+                  {doc.title}
                 </Text>
               </View>
             ))}
           </View>
 
-          {/* Start Button */}
-          <TouchableOpacity 
-            style={globalStyles.button} 
+          <TouchableOpacity
+            style={globalStyles.button}
             onPress={handleStartKYC}
             activeOpacity={0.8}
           >
-            <Text style={globalStyles.buttonText}>Let's Start</Text>
+            <Text style={globalStyles.buttonText}>
+              Let's Start
+            </Text>
           </TouchableOpacity>
-        </View>
+        </GlassCard>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -116,7 +129,7 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -141,10 +154,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
