@@ -14,36 +14,22 @@ import { globalStyles, colors } from '../styles/globalStyles';
 
 const AddressInputScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
-  const [address, setAddress] = useState('');
 
   const handleBack = () => {
     navigation.goBack();
   };
 
   const handleNext = () => {
-    if (!address.trim()) {
-      Alert.alert('Please enter your address', 'Address is required to continue.');
-      return;
-    }
-    
-    // Navigate to next screen or complete KYC flow
-    Alert.alert(
-      'KYC Information Collected',
-      `Country: ${selectedCountry?.label || 'Not selected'}\nAddress: ${address}`,
-      [
-        {
-          text: 'Continue',
-          onPress: () => {
-            // Navigate to next screen in your KYC flow
-            console.log('Continue to next step');
-          },
-        },
-      ]
-    );
+    // Navigate directly to LegalAddress screen
+    navigation.navigate('LegalAddress', {
+      selectedCountry,
+    });
   };
 
   const handleSkip = () => {
-    console.log('Skip address input');
+    navigation.navigate('LegalAddress', {
+      selectedCountry,
+    });
   };
 
   return (
@@ -81,46 +67,31 @@ const AddressInputScreen = ({ navigation, route }) => {
 
           {/* Selected Country Display */}
           {selectedCountry && (
-            <View style={styles.selectedCountryContainer}>
-              <View style={styles.countryFlag}>
-                <Text style={styles.flagText}>
-                  {selectedCountry.label}
-                </Text>
+            <TouchableOpacity
+              style={styles.selectedCountryContainer}
+              onPress={() => navigation.navigate('CountrySelection', { selectedCountry })}
+            >
+              <View style={styles.countryItem}>
+                <Text style={styles.flagEmoji}>{selectedCountry.label.split(' ')[0]}</Text>
+                <Text style={styles.countryText}>{selectedCountry.label.split(' ').slice(1).join(' ')}</Text>
+                <Ionicons name="chevron-down" size={20} color={colors.gray} />
               </View>
-            </View>
+            </TouchableOpacity>
           )}
-
-          {/* Address Input */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.addressInput}
-              placeholder="Enter your full address"
-              placeholderTextColor={colors.gray}
-              value={address}
-              onChangeText={setAddress}
-              multiline
-              numberOfLines={4}
-              textAlignVertical="top"
-            />
-          </View>
 
           {/* Next Button */}
           <TouchableOpacity 
             style={[
               globalStyles.button,
               { 
-                backgroundColor: address.trim() ? colors.primary : colors.lightGray,
+                backgroundColor: colors.primary,
                 marginTop: 30 
               }
             ]} 
             onPress={handleNext}
             activeOpacity={0.8}
-            disabled={!address.trim()}
           >
-            <Text style={[
-              globalStyles.buttonText,
-              { color: address.trim() ? colors.white : colors.gray }
-            ]}>
+            <Text style={globalStyles.buttonText}>
               Next
             </Text>
           </TouchableOpacity>
@@ -172,30 +143,24 @@ const styles = {
   selectedCountryContainer: {
     marginVertical: 20,
   },
-  countryFlag: {
+  countryItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
     borderColor: colors.borderColor,
   },
-  flagText: {
+  flagEmoji: {
+    fontSize: 24,
+    marginRight: 12,
+  },
+  countryText: {
     fontSize: 16,
     color: colors.black,
+    flex: 1,
     fontWeight: '500',
-  },
-  inputContainer: {
-    marginVertical: 20,
-  },
-  addressInput: {
-    backgroundColor: colors.background,
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
-    color: colors.black,
-    borderWidth: 1,
-    borderColor: colors.borderColor,
-    minHeight: 100,
   },
   privacyContainer: {
     marginTop: 20,

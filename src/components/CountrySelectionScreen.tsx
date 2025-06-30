@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { globalStyles, colors } from "../styles/globalStyles";
 
-const CountrySelectionScreen = ({ navigation }) => {
+const CountrySelectionScreen = ({ navigation, route }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -26,6 +26,12 @@ const CountrySelectionScreen = ({ navigation }) => {
     { label: "🇩🇪 Germany", value: "germany" },
     { label: "🇫🇷 France", value: "france" },
   ]);
+
+  useEffect(() => {
+    if (route.params?.selectedCountry) {
+      setValue(route.params.selectedCountry.value);
+    }
+  }, [route.params?.selectedCountry]);
 
   const handleBack = () => {
     navigation.goBack();
@@ -47,7 +53,7 @@ const CountrySelectionScreen = ({ navigation }) => {
 
   const handleSkip = () => {
     navigation.navigate("AddressInput", {
-      selectedCountry: null,
+      selectedCountry: { label: "🇦🇪 United Arab Emirates", value: "uae" }, // Default to UAE for demo
     });
   };
 
