@@ -67,13 +67,16 @@ const AddressInputScreen = ({ navigation, route }) => {
 
           {/* Selected Country Display */}
           {selectedCountry && (
-            <View style={styles.selectedCountryContainer}>
+            <TouchableOpacity
+              style={styles.selectedCountryContainer}
+              onPress={() => navigation.navigate('CountrySelection', { selectedCountry })}
+            >
               <View style={styles.countryItem}>
-                <Text style={styles.flagEmoji}>🇦🇪</Text>
-                <Text style={styles.countryText}>United Arab Emirates</Text>
+                <Text style={styles.flagEmoji}>{selectedCountry.label.split(' ')[0]}</Text>
+                <Text style={styles.countryText}>{selectedCountry.label.split(' ').slice(1).join(' ')}</Text>
                 <Ionicons name="chevron-down" size={20} color={colors.gray} />
               </View>
-            </View>
+            </TouchableOpacity>
           )}
 
           {/* Next Button */}
