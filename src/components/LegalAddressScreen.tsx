@@ -8,6 +8,8 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,14 +22,14 @@ const LegalAddressScreen = ({ navigation, route }) => {
     city: '',
     state: '',
     zipCode: '',
-    country: selectedCountry?.label || '',
+    country: selectedCountry?.label?.replace('🇦🇪 ', '') || 'United Arab Emirates',
   });
 
   const handleBack = () => {
     navigation.goBack();
   };
 
-  const handleConfirm = () => {
+  const handleNext = () => {
     const requiredFields = ['street', 'city', 'state', 'zipCode'];
     const missingFields = requiredFields.filter(field => !addressData[field].trim());
     
@@ -44,6 +46,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
           text: 'Continue',
           onPress: () => {
             console.log('Address data:', addressData);
+            // Navigate to next screen here
           },
         },
       ]
@@ -52,6 +55,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
 
   const handleSkip = () => {
     console.log('Skip legal address');
+    // Navigate to next screen
   };
 
   const updateField = (field, value) => {
@@ -94,94 +98,105 @@ const LegalAddressScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Content Card */}
-        <ScrollView style={{ flex: 1 }}>
-          <View style={[globalStyles.card, { marginTop: 40 }]}>
-            <Text style={globalStyles.title}>What's your legal address?</Text>
-            <Text style={globalStyles.subtitle}>
-              Type your address
-            </Text>
+        {/* Content */}
+        <KeyboardAvoidingView 
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <ScrollView 
+            style={{ flex: 1 }}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
+            <View style={[globalStyles.card, { marginTop: 40, flex: 1 }]}>
+              <Text style={globalStyles.title}>What's your legal address?</Text>
+              <Text style={globalStyles.subtitle}>
+                Type your address
+              </Text>
 
-            {/* Address Input Fields */}
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Address (Area and Street)"
-                placeholderTextColor={colors.gray}
-                value={addressData.street}
-                onChangeText={(value) => updateField('street', value)}
-              />
-              
-              <TextInput
-                style={styles.input}
-                placeholder="City/ District/ Town"
-                placeholderTextColor={colors.gray}
-                value={addressData.city}
-                onChangeText={(value) => updateField('city', value)}
-              />
-              
-              <TextInput
-                style={styles.input}
-                placeholder="State"
-                placeholderTextColor={colors.gray}
-                value={addressData.state}
-                onChangeText={(value) => updateField('state', value)}
-              />
-              
-              <View style={styles.zipCodeContainer}>
-                <Text style={styles.zipCodeLabel}>Zip Code</Text>
+              {/* Address Input Fields */}
+              <View style={styles.inputContainer}>
                 <TextInput
-                  style={[styles.input, { marginTop: 8 }]}
-                  placeholder="Enter your zipcode"
+                  style={styles.input}
+                  placeholder="Address (Area and Street)"
                   placeholderTextColor={colors.gray}
-                  value={addressData.zipCode}
-                  onChangeText={(value) => updateField('zipCode', value)}
-                  keyboardType="numeric"
+                  value={addressData.street}
+                  onChangeText={(value) => updateField('street', value)}
+                  multiline={true}
+                  numberOfLines={2}
                 />
-              </View>
-              
-              <View style={styles.countryContainer}>
-                <Text style={styles.countryLabel}>Country</Text>
+                
                 <TextInput
-                  style={[styles.input, { marginTop: 8 }]}
-                  placeholder="Enter your country"
+                  style={styles.input}
+                  placeholder="City/ District/ Town"
                   placeholderTextColor={colors.gray}
-                  value={addressData.country}
-                  onChangeText={(value) => updateField('country', value)}
+                  value={addressData.city}
+                  onChangeText={(value) => updateField('city', value)}
                 />
+                
+                <TextInput
+                  style={styles.input}
+                  placeholder="State"
+                  placeholderTextColor={colors.gray}
+                  value={addressData.state}
+                  onChangeText={(value) => updateField('state', value)}
+                />
+                
+                <View style={styles.zipCodeContainer}>
+                  <Text style={styles.zipCodeLabel}>Zip Code</Text>
+                  <TextInput
+                    style={[styles.input, { marginTop: 8 }]}
+                    placeholder="Enter your zipcode"
+                    placeholderTextColor={colors.gray}
+                    value={addressData.zipCode}
+                    onChangeText={(value) => updateField('zipCode', value)}
+                    keyboardType="numeric"
+                  />
+                </View>
+                
+                <View style={styles.countryContainer}>
+                  <Text style={styles.countryLabel}>Country</Text>
+                  <TextInput
+                    style={[styles.input, { marginTop: 8 }]}
+                    placeholder="Enter your country"
+                    placeholderTextColor={colors.gray}
+                    value={addressData.country}
+                    onChangeText={(value) => updateField('country', value)}
+                  />
+                </View>
               </View>
+
+              {/* Next Button */}
+              <TouchableOpacity 
+                style={[
+                  globalStyles.button,
+                  { 
+                    backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
+                    marginTop: 20 
+                  }
+                ]} 
+                onPress={handleNext}
+                activeOpacity={0.8}
+                disabled={!isFormValid()}
+              >
+                <Text style={[
+                  globalStyles.buttonText,
+                  { color: isFormValid() ? colors.white : colors.gray }
+                ]}>
+                  Next
+                </Text>
+              </TouchableOpacity>
+
+              {/* Privacy Link */}
+              <TouchableOpacity style={styles.privacyContainer}>
+                <Text style={styles.privacyText}>
+                  <Text style={styles.privacyLink}>Learn more</Text>
+                  {' '}here about how we protect your privacy.
+                </Text>
+              </TouchableOpacity>
             </View>
-
-            {/* Confirm Button */}
-            <TouchableOpacity 
-              style={[
-                globalStyles.button,
-                { 
-                  backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                  marginTop: 30 
-                }
-              ]} 
-              onPress={handleConfirm}
-              activeOpacity={0.8}
-              disabled={!isFormValid()}
-            >
-              <Text style={[
-                globalStyles.buttonText,
-                { color: isFormValid() ? colors.white : colors.gray }
-              ]}>
-                Confirm
-              </Text>
-            </TouchableOpacity>
-
-            {/* Privacy Link */}
-            <TouchableOpacity style={styles.privacyContainer}>
-              <Text style={styles.privacyText}>
-                <Text style={styles.privacyLink}>Learn more</Text>
-                {' '}here about how we protect your privacy.
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -230,6 +245,7 @@ const styles = {
     borderWidth: 1,
     borderColor: colors.borderColor,
     marginBottom: 16,
+    minHeight: 50,
   },
   zipCodeContainer: {
     marginBottom: 16,
@@ -238,6 +254,7 @@ const styles = {
     fontSize: 16,
     color: colors.black,
     fontWeight: '500',
+    marginBottom: 8,
   },
   countryContainer: {
     marginBottom: 16,
@@ -246,10 +263,12 @@ const styles = {
     fontSize: 16,
     color: colors.black,
     fontWeight: '500',
+    marginBottom: 8,
   },
   privacyContainer: {
     marginTop: 20,
     alignItems: 'center',
+    paddingBottom: 20,
   },
   privacyText: {
     fontSize: 14,

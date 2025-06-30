@@ -12,6 +12,9 @@ export const colors = {
   background: '#F8F9FA',
   cardBackground: '#FFFFFF',
   borderColor: '#E5E7EB',
+  success: '#2ECC71',
+  error: '#E74C3C',
+  warning: '#F39C12',
 };
 
 export const fonts = {

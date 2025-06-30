@@ -14,28 +14,21 @@ import { globalStyles, colors } from '../styles/globalStyles';
 
 const AddressInputScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
-  const [address, setAddress] = useState('');
 
   const handleBack = () => {
     navigation.goBack();
   };
 
   const handleNext = () => {
-    if (!address.trim()) {
-      Alert.alert('Please enter your address', 'Address is required to continue.');
-      return;
-    }
-    
+    // Navigate directly to LegalAddress screen
     navigation.navigate('LegalAddress', {
       selectedCountry,
-      address,
     });
   };
 
   const handleSkip = () => {
     navigation.navigate('LegalAddress', {
       selectedCountry,
-      address: '',
     });
   };
 
