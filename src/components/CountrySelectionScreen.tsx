@@ -177,3 +177,54 @@ const styles = {
   },
   dropdownContainer: {
     marginVertical: 20,
+    zIndex: 1000,
+  },
+  dropdown: {
+    backgroundColor: colors.background,
+    borderColor: colors.borderColor,
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    minHeight: 50,
+  },
+  dropdownList: {
+    backgroundColor: colors.white,
+    borderColor: colors.borderColor,
+    borderWidth: 1,
+    borderRadius: 12,
+    marginTop: 4,
+  },
+  dropdownText: {
+    fontSize: 16,
+    color: colors.black,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: colors.gray,
+  },
+  arrowIcon: {
+    tintColor: colors.gray,
+  },
+  tickIcon: {
+    tintColor: colors.primary,
+  },
+  selectedItemContainer: {
+    backgroundColor: colors.background,
+  },
+  privacyContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  privacyText: {
+    fontSize: 14,
+    color: colors.gray,
+    textAlign: "center",
+  },
+  privacyLink: {
+    color: colors.primary,
+    fontWeight: "500",
+  },
+};
+
+export default CountrySelectionScreen;
