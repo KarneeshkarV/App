@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
+  StyleSheet,
   Text,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
   Alert,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { globalStyles, colors } from '../styles/globalStyles';
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import DropDownPicker from "react-native-dropdown-picker";
+import { globalStyles, colors } from "../styles/globalStyles";
 
 const CountrySelectionScreen = ({ navigation }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: '🇦🇪 United Arab Emirates', value: 'uae' },
-    { label: '🇺🇸 United States', value: 'usa' },
-    { label: '🇬🇧 United Kingdom', value: 'uk' },
-    { label: '🇮🇳 India', value: 'india' },
-    { label: '🇨🇦 Canada', value: 'canada' },
-    { label: '🇦🇺 Australia', value: 'australia' },
-    { label: '🇩🇪 Germany', value: 'germany' },
-    { label: '🇫🇷 France', value: 'france' },
+    { label: "🇦🇪 United Arab Emirates", value: "uae" },
+    { label: "🇺🇸 United States", value: "usa" },
+    { label: "🇬🇧 United Kingdom", value: "uk" },
+    { label: "🇮🇳 India", value: "india" },
+    { label: "🇨🇦 Canada", value: "canada" },
+    { label: "🇦🇺 Australia", value: "australia" },
+    { label: "🇩🇪 Germany", value: "germany" },
+    { label: "🇫🇷 France", value: "france" },
   ]);
 
   const handleBack = () => {
@@ -32,25 +33,28 @@ const CountrySelectionScreen = ({ navigation }) => {
 
   const handleConfirm = () => {
     if (!value) {
-      Alert.alert('Please select a country', 'You must select your country of citizenship to continue.');
+      Alert.alert(
+        "Please select a country",
+        "You must select your country of citizenship to continue.",
+      );
       return;
     }
-    
-    navigation.navigate('AddressInput', { 
-      selectedCountry: items.find(item => item.value === value) 
+
+    navigation.navigate("AddressInput", {
+      selectedCountry: items.find((item) => item.value === value),
     });
   };
 
   const handleSkip = () => {
-    navigation.navigate('AddressInput', { 
-      selectedCountry: null 
+    navigation.navigate("AddressInput", {
+      selectedCountry: null,
     });
   };
 
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
+
       <LinearGradient
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
@@ -59,16 +63,16 @@ const CountrySelectionScreen = ({ navigation }) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={handleBack}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          
+
           <Text style={styles.stepText}>Step 1/11</Text>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
         </View>
@@ -105,22 +109,24 @@ const CountrySelectionScreen = ({ navigation }) => {
           </View>
 
           {/* Confirm Button */}
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[
-              globalStyles.button, 
-              { 
+              globalStyles.button,
+              {
                 backgroundColor: value ? colors.primary : colors.lightGray,
-                marginTop: 40 
-              }
-            ]} 
+                marginTop: 40,
+              },
+            ]}
             onPress={handleConfirm}
             activeOpacity={0.8}
             disabled={!value}
           >
-            <Text style={[
-              globalStyles.buttonText,
-              { color: value ? colors.white : colors.gray }
-            ]}>
+            <Text
+              style={[
+                globalStyles.buttonText,
+                { color: value ? colors.white : colors.gray },
+              ]}
+            >
               Confirm
             </Text>
           </TouchableOpacity>
@@ -128,8 +134,8 @@ const CountrySelectionScreen = ({ navigation }) => {
           {/* Privacy Link */}
           <TouchableOpacity style={styles.privacyContainer}>
             <Text style={styles.privacyText}>
-              <Text style={styles.privacyLink}>Learn more</Text>
-              {' '}here about how we protect your privacy.
+              <Text style={styles.privacyLink}>Learn more</Text> here about how
+              we protect your privacy.
             </Text>
           </TouchableOpacity>
         </View>
@@ -140,9 +146,9 @@ const CountrySelectionScreen = ({ navigation }) => {
 
 const styles = {
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 10,
@@ -151,14 +157,14 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   skipHeaderButton: {
     paddingHorizontal: 16,
@@ -167,7 +173,7 @@ const styles = {
   skipHeaderText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   dropdownContainer: {
     marginVertical: 20,
@@ -208,16 +214,16 @@ const styles = {
   },
   privacyContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   privacyText: {
     fontSize: 14,
     color: colors.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   privacyLink: {
     color: colors.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 };
 
