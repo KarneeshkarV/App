@@ -7,7 +7,14 @@ import CountrySelectionScreen from '../components/CountrySelectionScreen';
 import AddressInputScreen from '../components/AddressInputScreen';
 import LegalAddressScreen from '../components/LegalAddressScreen';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  KYCWelcome: undefined;
+  CountrySelection: undefined;
+  AddressInput: { country: string };
+  LegalAddress: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   return (

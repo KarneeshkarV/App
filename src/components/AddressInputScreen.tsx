@@ -1,177 +1,20 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  TextInput,
-  Alert,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import { globalStyles, colors } from '../styles/globalStyles';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
-const AddressInputScreen = ({ navigation, route }) => {
-  const { selectedCountry } = route.params || {};
+type AddressInputScreenRouteProp = RouteProp<RootStackParamList, 'AddressInput'>;
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
-
-  const handleNext = () => {
-    // Navigate directly to LegalAddress screen
-    navigation.navigate('LegalAddress', {
-      selectedCountry,
-    });
-  };
-
-  const handleSkip = () => {
-    navigation.navigate('LegalAddress', {
-      selectedCountry,
-    });
-  };
+const AddressInputScreen: React.FC<{ route: AddressInputScreenRouteProp }> = ({ route }) => {
+  const { country } = route.params;
 
   return (
-    <SafeAreaView style={globalStyles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
-      <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
-        style={globalStyles.gradientContainer}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={handleBack}
-          >
-            <Ionicons name="arrow-back" size={24} color={colors.white} />
-          </TouchableOpacity>
-          
-          <Text style={styles.stepText}>Step 1/11</Text>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
-            <Text style={styles.skipHeaderText}>Save & Skip</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Content Card */}
-        <View style={[globalStyles.card, { marginTop: 40 }]}>
-          <Text style={globalStyles.title}>Select your country of citizenship</Text>
-          <Text style={globalStyles.subtitle}>
-            Type your address
-          </Text>
-
-          {/* Selected Country Display */}
-          {selectedCountry && (
-            <View style={styles.selectedCountryContainer}>
-              <View style={styles.countryItem}>
-                <Text style={styles.flagEmoji}>🇦🇪</Text>
-                <Text style={styles.countryText}>United Arab Emirates</Text>
-                <Ionicons name="chevron-down" size={20} color={colors.gray} />
-              </View>
-            </View>
-          )}
-
-          {/* Next Button */}
-          <TouchableOpacity 
-            style={[
-              globalStyles.button,
-              { 
-                backgroundColor: colors.primary,
-                marginTop: 30 
-              }
-            ]} 
-            onPress={handleNext}
-            activeOpacity={0.8}
-          >
-            <Text style={globalStyles.buttonText}>
-              Next
-            </Text>
-          </TouchableOpacity>
-
-          {/* Privacy Link */}
-          <TouchableOpacity style={styles.privacyContainer}>
-            <Text style={styles.privacyText}>
-              <Text style={styles.privacyLink}>Learn more</Text>
-              {' '}here about how we protect your privacy.
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
-    </SafeAreaView>
+    <View>
+      <Text>Selected Country: {country}</Text>
+      <Text>Enter your address:</Text>
+      {/* Add address input fields here */}
+    </View>
   );
-};
-
-const styles = {
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stepText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  skipHeaderButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  skipHeaderText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  selectedCountryContainer: {
-    marginVertical: 20,
-  },
-  countryItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.background,
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: colors.borderColor,
-  },
-  flagEmoji: {
-    fontSize: 24,
-    marginRight: 12,
-  },
-  countryText: {
-    fontSize: 16,
-    color: colors.black,
-    flex: 1,
-    fontWeight: '500',
-  },
-  privacyContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  privacyText: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: 'center',
-  },
-  privacyLink: {
-    color: colors.primary,
-    fontWeight: '500',
-  },
 };
 
 export default AddressInputScreen;

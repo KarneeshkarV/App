@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,8 +12,16 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { globalStyles, colors } from "../styles/globalStyles";
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
-const CountrySelectionScreen = ({ navigation }) => {
+type CountrySelectionScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'CountrySelection'
+>;
+
+const CountrySelectionScreen = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -26,6 +34,7 @@ const CountrySelectionScreen = ({ navigation }) => {
     { label: "🇩🇪 Germany", value: "germany" },
     { label: "🇫🇷 France", value: "france" },
   ]);
+  const navigation = useNavigation<CountrySelectionScreenNavigationProp>();
 
   const handleBack = () => {
     navigation.goBack();
@@ -41,13 +50,13 @@ const CountrySelectionScreen = ({ navigation }) => {
     }
 
     navigation.navigate("AddressInput", {
-      selectedCountry: items.find((item) => item.value === value),
+      country: items.find((item) => item.value === value)?.label || ''
     });
   };
 
   const handleSkip = () => {
     navigation.navigate("AddressInput", {
-      selectedCountry: { label: "🇦🇪 United Arab Emirates", value: "uae" }, // Default to UAE for demo
+      country: "🇦🇪 United Arab Emirates", // Default to UAE for demo
     });
   };
 
@@ -144,7 +153,7 @@ const CountrySelectionScreen = ({ navigation }) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -225,6 +234,6 @@ const styles = {
     color: colors.primary,
     fontWeight: "500",
   },
-};
+});
 
 export default CountrySelectionScreen;
