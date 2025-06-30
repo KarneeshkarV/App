@@ -22,7 +22,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
     city: '',
     state: '',
     zipCode: '',
-    country: selectedCountry?.label?.replace('🇦🇪 ', '') || 'United Arab Emirates',
+    country: selectedCountry?.label?.replace(/^[^\s]+/, '').trim() || 'United Arab Emirates',
   });
 
   const handleBack = () => {
@@ -46,7 +46,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
           text: 'Continue',
           onPress: () => {
             console.log('Address data:', addressData);
-            // Navigate to next screen here
+            navigation.navigate('Birthday');
           },
         },
       ]
@@ -55,7 +55,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
 
   const handleSkip = () => {
     console.log('Skip legal address');
-    // Navigate to next screen
+    navigation.navigate('Birthday');
   };
 
   const updateField = (field, value) => {
@@ -108,7 +108,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}
           >
-            <View style={[globalStyles.card, { marginTop: 40, flex: 1 }]}>
+            <View style={[globalStyles.card, { marginTop: 100, flex: 1 }]}>
               <Text style={globalStyles.title}>What's your legal address?</Text>
               <Text style={globalStyles.subtitle}>
                 Type your address
@@ -157,11 +157,9 @@ const LegalAddressScreen = ({ navigation, route }) => {
                 <View style={styles.countryContainer}>
                   <Text style={styles.countryLabel}>Country</Text>
                   <TextInput
-                    style={[styles.input, { marginTop: 8 }]}
-                    placeholder="Enter your country"
-                    placeholderTextColor={colors.gray}
+                    style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}
                     value={addressData.country}
-                    onChangeText={(value) => updateField('country', value)}
+                    editable={false}
                   />
                 </View>
               </View>
@@ -172,7 +170,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
                   globalStyles.button,
                   { 
                     backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                    marginTop: 20 
+                    marginTop: 'auto' 
                   }
                 ]} 
                 onPress={handleNext}
@@ -208,8 +206,13 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 50,
     paddingBottom: 10,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
   },
   backButton: {
     width: 40,
@@ -254,7 +257,6 @@ const styles = {
     fontSize: 16,
     color: colors.black,
     fontWeight: '500',
-    marginBottom: 8,
   },
   countryContainer: {
     marginBottom: 16,
@@ -263,7 +265,6 @@ const styles = {
     fontSize: 16,
     color: colors.black,
     fontWeight: '500',
-    marginBottom: 8,
   },
   privacyContainer: {
     marginTop: 20,
