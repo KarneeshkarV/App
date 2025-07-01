@@ -66,7 +66,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
         </View>
 
         {/* Content Card */}
- <StackedCard>
+ <StackedCard topOffset={370}>
           <Text style={globalStyles.title}>Let's Verify KYC</Text>
           <Text style={globalStyles.subtitle}>
             Keep the following documents ready
@@ -116,7 +116,7 @@ const styles = {
   backButton: {
     width: 40,
     height: 40,
-    borderRadius: 20,
+    borderRadius: 60,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',

@@ -6,12 +6,12 @@ import { colors } from '../styles/globalStyles';
  * A three-layer “bottom-sheet” that mimics stacked cards.
  * Simply wrap your screen’s previous <card> contents with <StackedCard>.
  */
-const StackedCard: React.FC<{ style?: StyleProp<ViewStyle> }> = ({
-  children,
-  style,
-}) => {
+const StackedCard: React.FC<{
+  style?: StyleProp<ViewStyle>;
+  topOffset?: number;
+}> = ({ children, style, topOffset = 200 }) => {
   return (
-    <View style={styles.container} pointerEvents="box-none">
+    <View style={[styles.container, { top: topOffset }]} pointerEvents="box-none">
       {/*   Far-back layer   */}
       <View style={styles.layerTwo} />
       {/*   Mid layer        */}
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
     right: 0,
     // Force everything to the centre so we get the nice rounded top corners
     alignItems: 'center',
-    paddingBottom: 16,
+    display: 'flex', // Use flexbox for layout
   },
   layerTwo: {
     position: 'absolute',
     bottom: 24,
     width: '90%',
-    height: '94%',
+    height: '60%',
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     ...sheetShadow,
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   topLayer: {
     width: '96%',
+    flex: 1, // Make the top layer fill the available vertical space
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     padding: 24,

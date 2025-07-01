@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 export const colors = {
   primary: '#2ECC71',
+  primaryBtn: '#009E49',
   primaryDark: '#27AE60',
   white: '#FFFFFF',
   black: '#000000',
@@ -59,8 +60,8 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 24,
   },
   button: {
-    backgroundColor: colors.primary,
-    borderRadius: 12,
+    backgroundColor: colors.primaryBtn,
+    borderRadius: 60,
     paddingVertical: 16,
     paddingHorizontal: 24,
     alignItems: 'center',
