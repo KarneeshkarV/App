@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  TextInput,
-  Alert,
-} from 'react-native';
-import GradientBackground from './GradientBackground';
-import { Ionicons } from '@expo/vector-icons';
-import { globalStyles, colors } from '../styles/globalStyles';
-import StackedCard from './StackedCard';
+} from "react-native";
+import GradientBackground from "./GradientBackground";
+import { Ionicons } from "@expo/vector-icons";
+import { globalStyles, colors } from "../styles/globalStyles";
+import StackedCard from "./StackedCard";
 
 const AddressInputScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
@@ -22,13 +19,13 @@ const AddressInputScreen = ({ navigation, route }) => {
 
   const handleNext = () => {
     // Navigate directly to LegalAddress screen
-    navigation.navigate('LegalAddress', {
+    navigation.navigate("LegalAddress", {
       selectedCountry,
     });
   };
 
   const handleSkip = () => {
-    navigation.navigate('LegalAddress', {
+    navigation.navigate("LegalAddress", {
       selectedCountry,
     });
   };
@@ -36,20 +33,20 @@ const AddressInputScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
+
       <GradientBackground>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={handleBack}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          
+
           <Text style={styles.stepText}>Step 1/11</Text>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
         </View>
@@ -58,21 +55,31 @@ const AddressInputScreen = ({ navigation, route }) => {
         <StackedCard>
           <View style={styles.contentContainer}>
             <View style={styles.topContent}>
-              <Text style={globalStyles.title}>Select your country of citizenship</Text>
-              <Text style={globalStyles.subtitle}>
-                Type your address
+              <Text style={globalStyles.title}>
+                Select your country of citizenship
               </Text>
+              <Text style={globalStyles.subtitle}>Type your address</Text>
 
               {/* Selected Country Display */}
               {selectedCountry && (
                 <TouchableOpacity
                   style={styles.selectedCountryContainer}
-                  onPress={() => navigation.navigate('CountrySelection', { selectedCountry })}
+                  onPress={() =>
+                    navigation.navigate("CountrySelection", { selectedCountry })
+                  }
                 >
                   <View style={styles.countryItem}>
-                    <Text style={styles.flagEmoji}>{selectedCountry.label.split(' ')[0]}</Text>
-                    <Text style={styles.countryText}>{selectedCountry.label.split(' ').slice(1).join(' ')}</Text>
-                    <Ionicons name="chevron-down" size={20} color={colors.gray} />
+                    <Text style={styles.flagEmoji}>
+                      {selectedCountry.label.split(" ")[0]}
+                    </Text>
+                    <Text style={styles.countryText}>
+                      {selectedCountry.label.split(" ").slice(1).join(" ")}
+                    </Text>
+                    <Ionicons
+                      name="chevron-down"
+                      size={20}
+                      color={colors.gray}
+                    />
                   </View>
                 </TouchableOpacity>
               )}
@@ -80,26 +87,24 @@ const AddressInputScreen = ({ navigation, route }) => {
 
             <View style={styles.bottomContent}>
               {/* Next Button */}
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[
                   globalStyles.button,
-                  { 
+                  {
                     backgroundColor: colors.primary,
-                  }
-                ]} 
+                  },
+                ]}
                 onPress={handleNext}
                 activeOpacity={0.8}
               >
-                <Text style={globalStyles.buttonText}>
-                  Next
-                </Text>
+                <Text style={globalStyles.buttonText}>Next</Text>
               </TouchableOpacity>
 
               {/* Privacy Link */}
               <TouchableOpacity style={styles.privacyContainer}>
                 <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
+                  <Text style={styles.privacyLink}>Learn more</Text> here about
+                  how we protect your privacy.
                 </Text>
               </TouchableOpacity>
             </View>
@@ -112,9 +117,9 @@ const AddressInputScreen = ({ navigation, route }) => {
 
 const styles = {
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 10,
@@ -123,14 +128,14 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   skipHeaderButton: {
     paddingHorizontal: 16,
@@ -139,11 +144,11 @@ const styles = {
   skipHeaderText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   topContent: {
     flex: 1,
@@ -152,8 +157,8 @@ const styles = {
     marginVertical: 20,
   },
   countryItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
@@ -168,23 +173,23 @@ const styles = {
     fontSize: 16,
     color: colors.black,
     flex: 1,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   bottomContent: {
     paddingBottom: 20,
   },
   privacyContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   privacyText: {
     fontSize: 14,
     color: colors.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   privacyLink: {
     color: colors.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 };
 

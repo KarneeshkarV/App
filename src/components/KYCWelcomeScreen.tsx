@@ -6,8 +6,8 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import GradientBackground from "./GradientBackground";
 import { Ionicons } from "@expo/vector-icons";
 import { SvgXml } from "react-native-svg";
 import { globalStyles, colors } from "../styles/globalStyles";
@@ -87,12 +87,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <LinearGradient
-        colors={["#276040", "#3EC899"]}
-        style={globalStyles.gradientContainer}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
+      <GradientBackground>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity
@@ -111,11 +106,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <BlurView 
-            intensity={0} 
-            tint="light" 
-            style={styles.logoWrapper}
-          >
+          <BlurView intensity={10} tint="light" style={styles.logoWrapper}>
             <ShieldCheckIcon />
           </BlurView>
         </View>
@@ -154,7 +145,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
             </View>
           </View>
         </StackedCard>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };
@@ -200,7 +191,7 @@ const styles = {
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
-    overflow: "hidden",          
+    overflow: "hidden",
     elevation: 8,
   },
   contentContainer: {

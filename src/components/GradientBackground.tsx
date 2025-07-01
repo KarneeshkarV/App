@@ -1,7 +1,6 @@
-import React from 'react';
-import { ReactNode } from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
-import { globalStyles } from '../styles/globalStyles';
+import React, { ReactNode } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { globalStyles } from "../styles/globalStyles";
 
 interface Props {
   children: ReactNode;

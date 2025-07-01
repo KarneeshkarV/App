@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  StyleSheet,
   Text,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
   Alert,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import GradientBackground from "./GradientBackground";
 import DropDownPicker from "react-native-dropdown-picker";
 import { globalStyles, colors } from "../styles/globalStyles";
 import StackedCard from "./StackedCard";
@@ -62,7 +61,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
 
-      <LinearGradient
+      <GradientBackground
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
         start={{ x: 0, y: 0 }}
@@ -88,7 +87,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
         <StackedCard>
           <View style={styles.contentContainer}>
             <View style={styles.topContent}>
-              <Text style={globalStyles.title}>What's your country?</Text>
+              <Text style={globalStyles.title}>What s your country?</Text>
               <Text style={globalStyles.subtitle}>
                 Select your country of citizenship
               </Text>
@@ -144,14 +143,14 @@ const CountrySelectionScreen = ({ navigation, route }) => {
               {/* Privacy Link */}
               <TouchableOpacity style={styles.privacyContainer}>
                 <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text> here about how
-                  we protect your privacy.
+                  <Text style={styles.privacyLink}>Learn more</Text> here about
+                  how we protect your privacy.
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </StackedCard>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };
@@ -189,7 +188,7 @@ const styles = {
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   topContent: {
     flex: 1,

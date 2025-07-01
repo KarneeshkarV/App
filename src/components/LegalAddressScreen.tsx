@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,20 +10,22 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import { globalStyles, colors } from '../styles/globalStyles';
-import StackedCard from './StackedCard';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import GradientBackground from "./GradientBackground";
+import { globalStyles, colors } from "../styles/globalStyles";
+import StackedCard from "./StackedCard";
 
 const LegalAddressScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
   const [addressData, setAddressData] = useState({
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: selectedCountry?.label?.replace(/^[^]+/, '').trim() || 'United Arab Emirates',
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country:
+      selectedCountry?.label?.replace(/^[^]+/, "").trim() ||
+      "United Arab Emirates",
   });
 
   const handleBack = () => {
@@ -31,42 +33,49 @@ const LegalAddressScreen = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    const requiredFields = ['street', 'city', 'state', 'zipCode'];
-    const missingFields = requiredFields.filter(field => !addressData[field].trim());
-    
+    const requiredFields = ["street", "city", "state", "zipCode"];
+    const missingFields = requiredFields.filter(
+      (field) => !addressData[field].trim(),
+    );
+
     if (missingFields.length > 0) {
-      Alert.alert('Please fill all required fields', 'All address fields are required to continue.');
+      Alert.alert(
+        "Please fill all required fields",
+        "All address fields are required to continue.",
+      );
       return;
     }
-    
-    console.log('Address data:', addressData);
-    navigation.navigate('Birthday');
+
+    console.log("Address data:", addressData);
+    navigation.navigate("Birthday");
   };
 
   const handleSkip = () => {
-    console.log('Skip legal address');
-    navigation.navigate('Birthday');
+    console.log("Skip legal address");
+    navigation.navigate("Birthday");
   };
 
   const updateField = (field, value) => {
-    setAddressData(prev => ({
+    setAddressData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
   const isFormValid = () => {
-    return addressData.street.trim() && 
-           addressData.city.trim() && 
-           addressData.state.trim() && 
-           addressData.zipCode.trim();
+    return (
+      addressData.street.trim() &&
+      addressData.city.trim() &&
+      addressData.state.trim() &&
+      addressData.zipCode.trim()
+    );
   };
 
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      
-      <LinearGradient
+
+      <GradientBackground
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
         start={{ x: 0, y: 0 }}
@@ -74,36 +83,36 @@ const LegalAddressScreen = ({ navigation, route }) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={handleBack}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          
+
           <Text style={styles.stepText}>Step 2/11</Text>
-          
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
         </View>
 
         {/* Content */}
-        <KeyboardAvoidingView 
+        <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <StackedCard>
             <View style={styles.contentContainer}>
-              <ScrollView 
+              <ScrollView
                 style={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}
               >
-                <Text style={globalStyles.title}>What's your legal address?</Text>
-                <Text style={globalStyles.subtitle}>
-                  Type your address
+                <Text style={globalStyles.title}>
+                  What's your legal address?
                 </Text>
+                <Text style={globalStyles.subtitle}>Type your address</Text>
 
                 {/* Address Input Fields */}
                 <View style={styles.inputContainer}>
@@ -112,27 +121,27 @@ const LegalAddressScreen = ({ navigation, route }) => {
                     placeholder="Address (Area and Street)"
                     placeholderTextColor={colors.gray}
                     value={addressData.street}
-                    onChangeText={(value) => updateField('street', value)}
+                    onChangeText={(value) => updateField("street", value)}
                     multiline={true}
                     numberOfLines={2}
                   />
-                  
+
                   <TextInput
                     style={styles.input}
                     placeholder="City/ District/ Town"
                     placeholderTextColor={colors.gray}
                     value={addressData.city}
-                    onChangeText={(value) => updateField('city', value)}
+                    onChangeText={(value) => updateField("city", value)}
                   />
-                  
+
                   <TextInput
                     style={styles.input}
                     placeholder="State"
                     placeholderTextColor={colors.gray}
                     value={addressData.state}
-                    onChangeText={(value) => updateField('state', value)}
+                    onChangeText={(value) => updateField("state", value)}
                   />
-                  
+
                   <View style={styles.zipCodeContainer}>
                     <Text style={styles.zipCodeLabel}>Zip Code</Text>
                     <TextInput
@@ -140,15 +149,18 @@ const LegalAddressScreen = ({ navigation, route }) => {
                       placeholder="Enter your zipcode"
                       placeholderTextColor={colors.gray}
                       value={addressData.zipCode}
-                      onChangeText={(value) => updateField('zipCode', value)}
+                      onChangeText={(value) => updateField("zipCode", value)}
                       keyboardType="numeric"
                     />
                   </View>
-                  
+
                   <View style={styles.countryContainer}>
                     <Text style={styles.countryLabel}>Country</Text>
                     <TextInput
-                      style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}
+                      style={[
+                        styles.input,
+                        { marginTop: 8, backgroundColor: "#F0F0F0" },
+                      ]}
                       value={addressData.country}
                       editable={false}
                     />
@@ -158,21 +170,25 @@ const LegalAddressScreen = ({ navigation, route }) => {
 
               <View style={styles.bottomContent}>
                 {/* Next Button */}
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={[
                     globalStyles.button,
-                    { 
-                      backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                    }
-                  ]} 
+                    {
+                      backgroundColor: isFormValid()
+                        ? colors.primary
+                        : colors.lightGray,
+                    },
+                  ]}
                   onPress={handleNext}
                   activeOpacity={0.8}
                   disabled={!isFormValid()}
                 >
-                  <Text style={[
-                    globalStyles.buttonText,
-                    { color: isFormValid() ? colors.white : colors.gray }
-                  ]}>
+                  <Text
+                    style={[
+                      globalStyles.buttonText,
+                      { color: isFormValid() ? colors.white : colors.gray },
+                    ]}
+                  >
                     Next
                   </Text>
                 </TouchableOpacity>
@@ -180,28 +196,28 @@ const LegalAddressScreen = ({ navigation, route }) => {
                 {/* Privacy Link */}
                 <TouchableOpacity style={styles.privacyContainer}>
                   <Text style={styles.privacyText}>
-                    <Text style={styles.privacyLink}>Learn more</Text>
-                    {' '}here about how we protect your privacy.
+                    <Text style={styles.privacyLink}>Learn more</Text> here
+                    about how we protect your privacy.
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </StackedCard>
         </KeyboardAvoidingView>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };
 
 const styles = {
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 10,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -211,14 +227,14 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   skipHeaderButton: {
     paddingHorizontal: 16,
@@ -227,7 +243,7 @@ const styles = {
   skipHeaderText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   contentContainer: {
     flex: 1,
@@ -255,7 +271,7 @@ const styles = {
   zipCodeLabel: {
     fontSize: 16,
     color: colors.black,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   countryContainer: {
     marginBottom: 16,
@@ -263,7 +279,7 @@ const styles = {
   countryLabel: {
     fontSize: 16,
     color: colors.black,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   bottomContent: {
     paddingBottom: 20,
@@ -271,16 +287,16 @@ const styles = {
   },
   privacyContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   privacyText: {
     fontSize: 14,
     color: colors.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   privacyLink: {
     color: colors.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 };
 

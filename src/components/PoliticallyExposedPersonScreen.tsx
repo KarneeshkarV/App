@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,14 +8,18 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import { globalStyles, colors } from '../styles/globalStyles';
-import StackedCard from './StackedCard';
+} from "react-native";
+import GradientBackground from "./GradientBackground";
+import { Ionicons } from "@expo/vector-icons";
+import { globalStyles, colors } from "../styles/globalStyles";
+import StackedCard from "./StackedCard";
 
 const SelectableListItem = ({ label, isSelected, onPress }) => (
-  <TouchableOpacity style={styles.selectableItem} onPress={onPress} activeOpacity={0.7}>
+  <TouchableOpacity
+    style={styles.selectableItem}
+    onPress={onPress}
+    activeOpacity={0.7}
+  >
     <Text style={styles.selectableLabel}>{label}</Text>
     <View style={[styles.radio, isSelected && styles.radioSelected]}>
       {isSelected && <View style={styles.radioInner} />}
@@ -27,20 +31,24 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
   const [isPep, setIsPep] = useState(null);
 
   const options = [
-    { id: 'no', label: "No, I'm not a politically exposed person." },
-    { id: 'yes', label: 'Yes, a close family member or I are a politically exposed person.' },
+    { id: "no", label: "No, I'm not a politically exposed person." },
+    {
+      id: "yes",
+      label:
+        "Yes, a close family member or I are a politically exposed person.",
+    },
   ];
 
   const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
-    console.log('Is PEP:', isPep);
-    Alert.alert('KYC Complete', 'Thank you for completing the KYC process.');
+    console.log("Is PEP:", isPep);
+    Alert.alert("KYC Complete", "Thank you for completing the KYC process.");
     navigation.popToTop();
   };
-  
+
   const handleSkip = () => {
-    Alert.alert('KYC Complete', 'Thank you for completing the KYC process.');
+    Alert.alert("KYC Complete", "Thank you for completing the KYC process.");
     navigation.popToTop();
   };
 
@@ -49,7 +57,7 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <LinearGradient
+      <GradientBackground
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
         start={{ x: 0, y: 0 }}
@@ -60,7 +68,10 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
           <Text style={styles.stepText}>Step 9/11</Text>
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
         </View>
@@ -68,12 +79,15 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
         <StackedCard>
           <View style={styles.contentContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text style={globalStyles.title}>Are you politically exposed person?</Text>
-              <Text style={globalStyles.subtitle}>
-                Have you or a family member held a public role in Singapore or overseas?
+              <Text style={globalStyles.title}>
+                Are you politically exposed person?
               </Text>
-              
-              {options.map(option => (
+              <Text style={globalStyles.subtitle}>
+                Have you or a family member held a public role in Singapore or
+                overseas?
+              </Text>
+
+              {options.map((option) => (
                 <SelectableListItem
                   key={option.id}
                   label={option.label}
@@ -84,45 +98,52 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
             </ScrollView>
 
             <View style={styles.bottomContent}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[
                   globalStyles.button,
-                  { 
-                    backgroundColor: isFormValid() ? colors.primaryBtn : colors.lightGray,
-                  }
-                ]} 
+                  {
+                    backgroundColor: isFormValid()
+                      ? colors.primaryBtn
+                      : colors.lightGray,
+                  },
+                ]}
                 onPress={handleNext}
                 activeOpacity={0.8}
                 disabled={!isFormValid()}
               >
-                <Text style={[globalStyles.buttonText, { color: isFormValid() ? colors.white : colors.gray }]}>
+                <Text
+                  style={[
+                    globalStyles.buttonText,
+                    { color: isFormValid() ? colors.white : colors.gray },
+                  ]}
+                >
                   Confirm
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.privacyContainer}>
                 <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
+                  <Text style={styles.privacyLink}>Learn more</Text> here about
+                  how we protect your privacy.
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </StackedCard>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 10,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -132,14 +153,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   skipHeaderButton: {
     paddingHorizontal: 16,
@@ -148,15 +169,15 @@ const styles = StyleSheet.create({
   skipHeaderText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   selectableItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
@@ -176,8 +197,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: colors.lightGray,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   radioSelected: {
     borderColor: colors.primary,
@@ -194,16 +215,16 @@ const styles = StyleSheet.create({
   },
   privacyContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   privacyText: {
     fontSize: 14,
     color: colors.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   privacyLink: {
     color: colors.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 });
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { colors } from '../styles/globalStyles';
+import React from "react";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { colors } from "../styles/globalStyles";
 
 /**
  * A three-layer “bottom-sheet” that mimics stacked cards.
@@ -11,7 +11,10 @@ const StackedCard: React.FC<{
   topOffset?: number;
 }> = ({ children, style, topOffset = 200 }) => {
   return (
-    <View style={[styles.container, { top: topOffset }]} pointerEvents="box-none">
+    <View
+      style={[styles.container, { top: topOffset }]}
+      pointerEvents="box-none"
+    >
       {/*   Far-back layer   */}
       <View style={styles.layerTwo} />
       {/*   Mid layer        */}
@@ -36,35 +39,35 @@ const sheetShadow = {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     // Force everything to the centre so we get the nice rounded top corners
-    alignItems: 'center',
-    display: 'flex', // Use flexbox for layout
+    alignItems: "center",
+    display: "flex", // Use flexbox for layout
   },
   layerTwo: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 24,
-    width: '90%',
-    height: '60%',
+    width: "90%",
+    height: "60%",
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     ...sheetShadow,
   },
   layerOne: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 12,
-    width: '94%',
-    height: '97%',
+    width: "94%",
+    height: "97%",
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     ...sheetShadow,
   },
   topLayer: {
-    width: '96%',
-    height: '100%',
+    width: "96%",
+    height: "100%",
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     padding: 24,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,16 +8,20 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
-  Alert
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { globalStyles, colors } from '../styles/globalStyles';
-import StackedCard from './StackedCard';
+  Alert,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import GradientBackground from "./GradientBackground";
+import DropDownPicker from "react-native-dropdown-picker";
+import { globalStyles, colors } from "../styles/globalStyles";
+import StackedCard from "./StackedCard";
 
 const CustomCheckbox = ({ label, value, onValueChange }) => (
-  <TouchableOpacity style={styles.checkboxContainer} onPress={() => onValueChange(!value)} activeOpacity={0.7}>
+  <TouchableOpacity
+    style={styles.checkboxContainer}
+    onPress={() => onValueChange(!value)}
+    activeOpacity={0.7}
+  >
     <View style={[styles.checkbox, value && styles.checkboxChecked]}>
       {value && <Ionicons name="checkmark" size={16} color={colors.white} />}
     </View>
@@ -26,7 +30,7 @@ const CustomCheckbox = ({ label, value, onValueChange }) => (
 );
 
 const PlaceOfBirthScreen = ({ navigation }) => {
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState("");
   const [isSameAsLegal, setIsSameAsLegal] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -41,14 +45,21 @@ const PlaceOfBirthScreen = ({ navigation }) => {
   const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
-    console.log('City:', city, 'Country:', country, 'Same as Legal:', isSameAsLegal);
+    console.log(
+      "City:",
+      city,
+      "Country:",
+      country,
+      "Same as Legal:",
+      isSameAsLegal,
+    );
     // Navigate to the next screen in the KYC flow
-    navigation.navigate('EmiratesId');
+    navigation.navigate("EmiratesId");
   };
 
   const handleSkip = () => {
-    console.log('Skip place of birth');
-    navigation.navigate('EmiratesId');
+    console.log("Skip place of birth");
+    navigation.navigate("EmiratesId");
   };
 
   const isFormValid = () => {
@@ -58,7 +69,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <LinearGradient
+      <GradientBackground
         colors={[colors.primary, colors.primaryDark]}
         style={globalStyles.gradientContainer}
         start={{ x: 0, y: 0 }}
@@ -69,15 +80,18 @@ const PlaceOfBirthScreen = ({ navigation }) => {
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
           <Text style={styles.stepText}>Step 5/11</Text>
-          <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
+          <TouchableOpacity
+            style={styles.skipHeaderButton}
+            onPress={handleSkip}
+          >
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
         </View>
 
         <StackedCard>
           <View style={styles.contentContainer}>
-            <ScrollView 
-              contentContainerStyle={{ flexGrow: 1 }} 
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
               keyboardShouldPersistTaps="handled"
               style={styles.scrollContent}
             >
@@ -119,45 +133,52 @@ const PlaceOfBirthScreen = ({ navigation }) => {
             </ScrollView>
 
             <View style={styles.bottomContent}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[
                   globalStyles.button,
-                  { 
-                    backgroundColor: isFormValid() ? colors.primaryBtn : colors.lightGray,
-                  }
-                ]} 
+                  {
+                    backgroundColor: isFormValid()
+                      ? colors.primaryBtn
+                      : colors.lightGray,
+                  },
+                ]}
                 onPress={handleNext}
                 activeOpacity={0.8}
                 disabled={!isFormValid()}
               >
-                <Text style={[globalStyles.buttonText, { color: isFormValid() ? colors.white : colors.gray }]}>
+                <Text
+                  style={[
+                    globalStyles.buttonText,
+                    { color: isFormValid() ? colors.white : colors.gray },
+                  ]}
+                >
                   Next
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.privacyContainer}>
                 <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
+                  <Text style={styles.privacyLink}>Learn more</Text> here about
+                  how we protect your privacy.
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </StackedCard>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 10,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -167,14 +188,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   stepText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   skipHeaderButton: {
     paddingHorizontal: 16,
@@ -183,14 +204,13 @@ const styles = StyleSheet.create({
   skipHeaderText: {
     color: colors.white,
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
-  scrollContent: {
-  },
+  scrollContent: {},
   input: {
     backgroundColor: colors.background,
     borderRadius: 12,
@@ -216,8 +236,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 16,
   },
   checkbox: {
@@ -227,8 +247,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.lightGray,
     marginRight: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkboxChecked: {
     backgroundColor: colors.primary,
@@ -244,16 +264,16 @@ const styles = StyleSheet.create({
   },
   privacyContainer: {
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   privacyText: {
     fontSize: 14,
     color: colors.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
   privacyLink: {
     color: colors.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 });
 
