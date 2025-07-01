@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    flex: 1,
   },
   dobContainer: {
     flexDirection: 'row',

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   topLayer: {
     width: '96%',
-    flex: 1, // Make the top layer fill the available vertical space
+    height: '100%',
     borderRadius: SHEET_RADIUS,
     backgroundColor: colors.cardBackground,
     padding: 24,
