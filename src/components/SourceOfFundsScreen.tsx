@@ -5,55 +5,56 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  TextInput,
   StyleSheet,
   ScrollView,
-  Alert
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { globalStyles, colors } from '../styles/globalStyles';
 import StackedCard from './StackedCard';
 
-const CustomCheckbox = ({ label, value, onValueChange }) => (
-  <TouchableOpacity style={styles.checkboxContainer} onPress={() => onValueChange(!value)} activeOpacity={0.7}>
-    <View style={[styles.checkbox, value && styles.checkboxChecked]}>
-      {value && <Ionicons name="checkmark" size={16} color={colors.white} />}
+const SelectableListItem = ({ label, icon, isSelected, onPress }) => (
+  <TouchableOpacity style={styles.selectableItem} onPress={onPress} activeOpacity={0.7}>
+    <View style={globalStyles.documentIcon}>
+      <Ionicons name={icon} size={20} color={colors.white} />
     </View>
-    <Text style={styles.checkboxLabel}>{label}</Text>
+    <Text style={styles.selectableLabel}>{label}</Text>
+    <View style={[styles.radio, isSelected && styles.radioSelected]}>
+      {isSelected && <View style={styles.radioInner} />}
+    </View>
   </TouchableOpacity>
 );
 
-const PlaceOfBirthScreen = ({ navigation }) => {
-  const [city, setCity] = useState('');
-  const [isSameAsLegal, setIsSameAsLegal] = useState(false);
 
-  const [open, setOpen] = useState(false);
-  const [country, setCountry] = useState(null);
-  const [items, setItems] = useState([
-    { label: "United Arab Emirates", value: "uae" },
-    { label: "United States", value: "usa" },
-    { label: "United Kingdom", value: "uk" },
-    { label: "India", value: "india" },
-  ]);
+const SourceOfFundsScreen = ({ navigation }) => {
+  const [selectedSources, setSelectedSources] = useState([]);
+
+  const sources = [
+    { id: 'income', label: 'Income', icon: 'briefcase-outline' },
+    { id: 'investments', label: 'Investments', icon: 'trending-up-outline' },
+    { id: 'inheritance', label: 'Inheritance', icon: 'people-outline' },
+    { id: 'others', label: 'Others', icon: 'ellipsis-horizontal-outline' },
+  ];
 
   const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
-    console.log('City:', city, 'Country:', country, 'Same as Legal:', isSameAsLegal);
-    // Navigate to the next screen in the KYC flow
-    navigation.navigate('EmiratesId');
+    console.log('Selected sources:', selectedSources);
+    navigation.navigate('EmploymentStatus');
   };
-
+  
   const handleSkip = () => {
-    console.log('Skip place of birth');
-    navigation.navigate('EmiratesId');
+    console.log('Skip Source of Funds');
+    navigation.navigate('EmploymentStatus');
   };
 
-  const isFormValid = () => {
-    return city.trim().length > 0 && country !== null;
+  const toggleSource = (id) => {
+    setSelectedSources(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
   };
+
+  const isFormValid = () => selectedSources.length > 0;
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -68,7 +69,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          <Text style={styles.stepText}>Step 5/11</Text>
+          <Text style={styles.stepText}>Step 7/11</Text>
           <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
@@ -76,46 +77,21 @@ const PlaceOfBirthScreen = ({ navigation }) => {
 
         <StackedCard>
           <View style={styles.contentContainer}>
-            <ScrollView 
-              contentContainerStyle={{ flexGrow: 1 }} 
-              keyboardShouldPersistTaps="handled"
-              style={styles.scrollContent}
-            >
-              <Text style={globalStyles.title}>Where you were born?</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text style={globalStyles.title}>What's your source of funds?</Text>
               <Text style={globalStyles.subtitle}>
-                Enter the place of birth that's on your passport
+                Select that apply.
               </Text>
-
-              <TextInput
-                style={styles.input}
-                placeholder="City/ District/ Town"
-                placeholderTextColor={colors.gray}
-                value={city}
-                onChangeText={setCity}
-              />
-
-              <DropDownPicker
-                open={open}
-                value={country}
-                items={items}
-                setOpen={setOpen}
-                setValue={setCountry}
-                setItems={setItems}
-                placeholder="Select your country"
-                style={styles.dropdown}
-                dropDownContainerStyle={styles.dropdownList}
-                textStyle={{ fontSize: 16, color: colors.black }}
-                placeholderStyle={{ color: colors.gray, fontSize: 16 }}
-                listMode="MODAL"
-                containerStyle={{ marginBottom: 20 }}
-                zIndex={1000}
-              />
-
-              <CustomCheckbox
-                label="Same as legal address."
-                value={isSameAsLegal}
-                onValueChange={setIsSameAsLegal}
-              />
+              
+              {sources.map(source => (
+                <SelectableListItem
+                  key={source.id}
+                  label={source.label}
+                  icon={source.icon}
+                  isSelected={selectedSources.includes(source.id)}
+                  onPress={() => toggleSource(source.id)}
+                />
+              ))}
             </ScrollView>
 
             <View style={styles.bottomContent}>
@@ -131,7 +107,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
                 disabled={!isFormValid()}
               >
                 <Text style={[globalStyles.buttonText, { color: isFormValid() ? colors.white : colors.gray }]}>
-                  Next
+                  Confirm
                 </Text>
               </TouchableOpacity>
 
@@ -189,54 +165,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between'
   },
-  scrollContent: {
-  },
-  input: {
+  selectableItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.borderColor,
+  },
+  selectableLabel: {
     fontSize: 16,
     color: colors.black,
-    borderWidth: 1,
-    borderColor: colors.borderColor,
-    marginBottom: 20,
-    height: 50,
+    flex: 1,
+    marginLeft: 12,
   },
-  dropdown: {
-    backgroundColor: colors.background,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
+  radio: {
+    width: 24,
+    height: 24,
     borderRadius: 12,
-    minHeight: 50,
-  },
-  dropdownList: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    borderRadius: 12,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
     borderWidth: 2,
     borderColor: colors.lightGray,
-    marginRight: 12,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center'
   },
-  checkboxChecked: {
-    backgroundColor: colors.primary,
+  radioSelected: {
     borderColor: colors.primary,
   },
-  checkboxLabel: {
-    fontSize: 14,
-    color: colors.gray,
+  radioInner: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: colors.primary,
   },
   bottomContent: {
     paddingBottom: 20,
@@ -257,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaceOfBirthScreen;
+export default SourceOfFundsScreen;

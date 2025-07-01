@@ -8,7 +8,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import GradientBackground from './GradientBackground';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
 import StackedCard from './StackedCard';
@@ -37,12 +37,7 @@ const AddressInputScreen = ({ navigation, route }) => {
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       
-      <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
-        style={globalStyles.gradientContainer}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
+      <GradientBackground>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity 
@@ -110,7 +105,7 @@ const AddressInputScreen = ({ navigation, route }) => {
             </View>
           </View>
         </StackedCard>
-      </LinearGradient>
+      </GradientBackground>
     </SafeAreaView>
   );
 };

@@ -6,6 +6,7 @@ export const colors = {
   primary: '#2ECC71',
   primaryBtn: '#009E49',
   primaryDark: '#27AE60',
+  primaryLight: '#E8F8EE',
   white: '#FFFFFF',
   black: '#000000',
   gray: '#7F8C8D',
@@ -50,13 +51,13 @@ export const globalStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: colors.black,
-    textAlign: 'center',
+    marginLeft:10,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
     color: colors.gray,
-    textAlign: 'center',
+    marginLeft:10,
     marginBottom: 24,
   },
   button: {
@@ -91,6 +92,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
+    marginRight: 10,
   },
   documentIcon: {
     width: 40,
@@ -107,4 +109,3 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
   },
 });
-

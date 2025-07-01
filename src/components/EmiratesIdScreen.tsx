@@ -7,12 +7,10 @@ import {
   StatusBar,
   TextInput,
   StyleSheet,
-  ScrollView,
-  Alert
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { globalStyles, colors } from '../styles/globalStyles';
 import StackedCard from './StackedCard';
 
@@ -25,34 +23,32 @@ const CustomCheckbox = ({ label, value, onValueChange }) => (
   </TouchableOpacity>
 );
 
-const PlaceOfBirthScreen = ({ navigation }) => {
-  const [city, setCity] = useState('');
-  const [isSameAsLegal, setIsSameAsLegal] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const [country, setCountry] = useState(null);
-  const [items, setItems] = useState([
-    { label: "United Arab Emirates", value: "uae" },
-    { label: "United States", value: "usa" },
-    { label: "United Kingdom", value: "uk" },
-    { label: "India", value: "india" },
-  ]);
+const EmiratesIdScreen = ({ navigation }) => {
+  const [emiratesId, setEmiratesId] = useState('784-1234-1234567');
+  const [agreed, setAgreed] = useState(true);
 
   const handleBack = () => navigation.goBack();
 
   const handleNext = () => {
-    console.log('City:', city, 'Country:', country, 'Same as Legal:', isSameAsLegal);
-    // Navigate to the next screen in the KYC flow
-    navigation.navigate('EmiratesId');
+    if (!agreed) {
+      Alert.alert('Agreement Required', 'You must agree to share this information to proceed.');
+      return;
+    }
+    if (!/^\d{3}-\d{4}-\d{7}$/.test(emiratesId)) {
+      Alert.alert('Invalid ID', 'Please enter a valid Emirates ID in the format XXX-XXXX-XXXXXXX.');
+      return;
+    }
+    console.log('Emirates ID:', emiratesId);
+    navigation.navigate('SourceOfFunds');
   };
 
   const handleSkip = () => {
-    console.log('Skip place of birth');
-    navigation.navigate('EmiratesId');
+    console.log('Skip Emirates ID');
+    navigation.navigate('SourceOfFunds');
   };
 
   const isFormValid = () => {
-    return city.trim().length > 0 && country !== null;
+    return emiratesId.trim().length > 0 && agreed;
   };
 
   return (
@@ -68,7 +64,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          <Text style={styles.stepText}>Step 5/11</Text>
+          <Text style={styles.stepText}>Step 6/11</Text>
           <TouchableOpacity style={styles.skipHeaderButton} onPress={handleSkip}>
             <Text style={styles.skipHeaderText}>Save & Skip</Text>
           </TouchableOpacity>
@@ -76,47 +72,27 @@ const PlaceOfBirthScreen = ({ navigation }) => {
 
         <StackedCard>
           <View style={styles.contentContainer}>
-            <ScrollView 
-              contentContainerStyle={{ flexGrow: 1 }} 
-              keyboardShouldPersistTaps="handled"
-              style={styles.scrollContent}
-            >
-              <Text style={globalStyles.title}>Where you were born?</Text>
+            <View>
+              <Text style={globalStyles.title}>What's your Emirates ID?</Text>
               <Text style={globalStyles.subtitle}>
-                Enter the place of birth that's on your passport
+                Reconfirm your Emirates ID number.
               </Text>
-
+              
               <TextInput
                 style={styles.input}
-                placeholder="City/ District/ Town"
+                placeholder="784-XXXX-XXXXXXX-X"
                 placeholderTextColor={colors.gray}
-                value={city}
-                onChangeText={setCity}
-              />
-
-              <DropDownPicker
-                open={open}
-                value={country}
-                items={items}
-                setOpen={setOpen}
-                setValue={setCountry}
-                setItems={setItems}
-                placeholder="Select your country"
-                style={styles.dropdown}
-                dropDownContainerStyle={styles.dropdownList}
-                textStyle={{ fontSize: 16, color: colors.black }}
-                placeholderStyle={{ color: colors.gray, fontSize: 16 }}
-                listMode="MODAL"
-                containerStyle={{ marginBottom: 20 }}
-                zIndex={1000}
+                value={emiratesId}
+                onChangeText={setEmiratesId}
+                keyboardType="number-pad"
               />
 
               <CustomCheckbox
-                label="Same as legal address."
-                value={isSameAsLegal}
-                onValueChange={setIsSameAsLegal}
+                label="I agree to share this information, as it is required to collect this as a financial institution regulated by monetary Authority of UAE."
+                value={agreed}
+                onValueChange={setAgreed}
               />
-            </ScrollView>
+            </View>
 
             <View style={styles.bottomContent}>
               <TouchableOpacity 
@@ -189,8 +165,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between'
   },
-  scrollContent: {
-  },
   input: {
     backgroundColor: colors.background,
     borderRadius: 12,
@@ -201,23 +175,11 @@ const styles = StyleSheet.create({
     borderColor: colors.borderColor,
     marginBottom: 20,
     height: 50,
-  },
-  dropdown: {
-    backgroundColor: colors.background,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    borderRadius: 12,
-    minHeight: 50,
-  },
-  dropdownList: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    borderRadius: 12,
+    textAlign: 'center'
   },
   checkboxContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 16,
   },
   checkbox: {
@@ -229,6 +191,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 2,
   },
   checkboxChecked: {
     backgroundColor: colors.primary,
@@ -237,6 +200,7 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 14,
     color: colors.gray,
+    flex: 1,
   },
   bottomContent: {
     paddingBottom: 20,
@@ -257,4 +221,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaceOfBirthScreen;
+export default EmiratesIdScreen;
