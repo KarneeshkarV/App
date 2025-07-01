@@ -76,74 +76,78 @@ const BirthdayScreen = ({ navigation }) => {
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <ScrollView 
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-            keyboardShouldPersistTaps="handled"
-          >
-            <StackedCard>
-              <Text style={globalStyles.title}>What's your birthday?</Text>
-              <Text style={globalStyles.subtitle}>
-                Enter DOB as on your government issued ID.
-              </Text>
-
-              <View style={styles.dobContainer}>
-                <TextInput
-                  style={[styles.dobInput, styles.dobInputDay]}
-                  placeholder="14"
-                  placeholderTextColor={colors.gray}
-                  value={dob.day}
-                  onChangeText={(text) => setDob({ ...dob, day: text })}
-                  keyboardType="number-pad"
-                  maxLength={2}
-                />
-                <TextInput
-                  style={[styles.dobInput, styles.dobInputMonth]}
-                  placeholder="01"
-                  placeholderTextColor={colors.gray}
-                  value={dob.month}
-                  onChangeText={(text) => setDob({ ...dob, month: text })}
-                  keyboardType="number-pad"
-                  maxLength={2}
-                />
-                <TextInput
-                  style={[styles.dobInput, styles.dobInputYear]}
-                  placeholder="1993"
-                  placeholderTextColor={colors.gray}
-                  value={dob.year}
-                  onChangeText={(text) => setDob({ ...dob, year: text })}
-                  keyboardType="number-pad"
-                  maxLength={4}
-                />
-              </View>
-
-              <TouchableOpacity 
-                style={[
-                  globalStyles.button,
-                  { 
-                    backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                    marginTop: 30 
-                  }
-                ]} 
-                onPress={handleNext}
-                activeOpacity={0.8}
-                disabled={!isFormValid()}
+          <StackedCard>
+            <View style={styles.contentContainer}>
+              <ScrollView 
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+                style={styles.scrollContent}
               >
-                <Text style={[
-                  globalStyles.buttonText,
-                  { color: isFormValid() ? colors.white : colors.gray }
-                ]}>
-                  Next
+                <Text style={globalStyles.title}>What's your birthday?</Text>
+                <Text style={globalStyles.subtitle}>
+                  Enter DOB as on your government issued ID.
                 </Text>
-              </TouchableOpacity>
 
-              <TouchableOpacity style={styles.privacyContainer}>
-                <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
-                </Text>
-              </TouchableOpacity>
-            </StackedCard>
-          </ScrollView>
+                <View style={styles.dobContainer}>
+                  <TextInput
+                    style={[styles.dobInput, styles.dobInputDay]}
+                    placeholder="14"
+                    placeholderTextColor={colors.gray}
+                    value={dob.day}
+                    onChangeText={(text) => setDob({ ...dob, day: text })}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                  />
+                  <TextInput
+                    style={[styles.dobInput, styles.dobInputMonth]}
+                    placeholder="01"
+                    placeholderTextColor={colors.gray}
+                    value={dob.month}
+                    onChangeText={(text) => setDob({ ...dob, month: text })}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                  />
+                  <TextInput
+                    style={[styles.dobInput, styles.dobInputYear]}
+                    placeholder="1993"
+                    placeholderTextColor={colors.gray}
+                    value={dob.year}
+                    onChangeText={(text) => setDob({ ...dob, year: text })}
+                    keyboardType="number-pad"
+                    maxLength={4}
+                  />
+                </View>
+              </ScrollView>
+
+              <View style={styles.bottomContent}>
+                <TouchableOpacity 
+                  style={[
+                    globalStyles.button,
+                    { 
+                      backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
+                    }
+                  ]} 
+                  onPress={handleNext}
+                  activeOpacity={0.8}
+                  disabled={!isFormValid()}
+                >
+                  <Text style={[
+                    globalStyles.buttonText,
+                    { color: isFormValid() ? colors.white : colors.gray }
+                  ]}>
+                    Next
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.privacyContainer}>
+                  <Text style={styles.privacyText}>
+                    <Text style={styles.privacyLink}>Learn more</Text>
+                    {' '}here about how we protect your privacy.
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </StackedCard>
         </KeyboardAvoidingView>
       </LinearGradient>
     </SafeAreaView>
@@ -186,18 +190,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  privacyContainer: {
-    marginTop: 20,
-    alignItems: 'center',
+  contentContainer: {
+    flex: 1,
   },
-  privacyText: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: 'center',
-  },
-  privacyLink: {
-    color: colors.primary,
-    fontWeight: '500',
+  scrollContent: {
+    flex: 1,
   },
   dobContainer: {
     flexDirection: 'row',
@@ -224,6 +221,23 @@ const styles = StyleSheet.create({
   },
   dobInputYear: {
     width: '38%',
+  },
+  bottomContent: {
+    paddingBottom: 20,
+    paddingTop: 20,
+  },
+  privacyContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  privacyText: {
+    fontSize: 14,
+    color: colors.gray,
+    textAlign: 'center',
+  },
+  privacyLink: {
+    color: colors.primary,
+    fontWeight: '500',
   },
 });
 

@@ -66,39 +66,45 @@ const KYCWelcomeScreen = ({ navigation }) => {
         </View>
 
         {/* Content Card */}
- <StackedCard topOffset={370}>
-          <Text style={globalStyles.title}>Let's Verify KYC</Text>
-          <Text style={globalStyles.subtitle}>
-            Keep the following documents ready
-          </Text>
+        <StackedCard topOffset={370}>
+          <View style={styles.contentContainer}>
+            <View style={styles.topContent}>
+              <Text style={globalStyles.title}>Let's Verify KYC</Text>
+              <Text style={globalStyles.subtitle}>
+                Keep the following documents ready
+              </Text>
 
-          {/* Document List */}
-          <View style={styles.documentsContainer}>
-            {documents.map((document) => (
-              <View key={document.id} style={globalStyles.documentItem}>
-                <View style={globalStyles.documentIcon}>
-                  <Ionicons 
-                    name={document.icon} 
-                    size={20} 
-                    color={colors.white} 
-                  />
-                </View>
-                <Text style={globalStyles.documentText}>
-                  {document.title}
-                </Text>
+              {/* Document List */}
+              <View style={styles.documentsContainer}>
+                {documents.map((document) => (
+                  <View key={document.id} style={globalStyles.documentItem}>
+                    <View style={globalStyles.documentIcon}>
+                      <Ionicons 
+                        name={document.icon} 
+                        size={20} 
+                        color={colors.white} 
+                      />
+                    </View>
+                    <Text style={globalStyles.documentText}>
+                      {document.title}
+                    </Text>
+                  </View>
+                ))}
               </View>
-            ))}
-          </View>
+            </View>
 
-          {/* Start Button */}
-          <TouchableOpacity 
-            style={globalStyles.button} 
-            onPress={handleStartKYC}
-            activeOpacity={0.8}
-          >
-            <Text style={globalStyles.buttonText}>Let's Start</Text>
-          </TouchableOpacity>
-</StackedCard>
+            <View style={styles.bottomContent}>
+              {/* Start Button */}
+              <TouchableOpacity 
+                style={globalStyles.button} 
+                onPress={handleStartKYC}
+                activeOpacity={0.8}
+              >
+                <Text style={globalStyles.buttonText}>Let's Start</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -150,8 +156,18 @@ const styles = {
     shadowRadius: 8,
     elevation: 8,
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  topContent: {
+    flex: 1,
+  },
   documentsContainer: {
-    marginBottom: 20,
+    marginTop: 20,
+  },
+  bottomContent: {
+    paddingBottom: 20,
   },
 };
 

@@ -61,49 +61,54 @@ const AddressInputScreen = ({ navigation, route }) => {
 
         {/* Content Card */}
         <StackedCard>
-          <Text style={globalStyles.title}>Select your country of citizenship</Text>
-          <Text style={globalStyles.subtitle}>
-            Type your address
-          </Text>
+          <View style={styles.contentContainer}>
+            <View style={styles.topContent}>
+              <Text style={globalStyles.title}>Select your country of citizenship</Text>
+              <Text style={globalStyles.subtitle}>
+                Type your address
+              </Text>
 
-          {/* Selected Country Display */}
-          {selectedCountry && (
-            <TouchableOpacity
-              style={styles.selectedCountryContainer}
-              onPress={() => navigation.navigate('CountrySelection', { selectedCountry })}
-            >
-              <View style={styles.countryItem}>
-                <Text style={styles.flagEmoji}>{selectedCountry.label.split(' ')[0]}</Text>
-                <Text style={styles.countryText}>{selectedCountry.label.split(' ').slice(1).join(' ')}</Text>
-                <Ionicons name="chevron-down" size={20} color={colors.gray} />
-              </View>
-            </TouchableOpacity>
-          )}
+              {/* Selected Country Display */}
+              {selectedCountry && (
+                <TouchableOpacity
+                  style={styles.selectedCountryContainer}
+                  onPress={() => navigation.navigate('CountrySelection', { selectedCountry })}
+                >
+                  <View style={styles.countryItem}>
+                    <Text style={styles.flagEmoji}>{selectedCountry.label.split(' ')[0]}</Text>
+                    <Text style={styles.countryText}>{selectedCountry.label.split(' ').slice(1).join(' ')}</Text>
+                    <Ionicons name="chevron-down" size={20} color={colors.gray} />
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
 
-          {/* Next Button */}
-          <TouchableOpacity 
-            style={[
-              globalStyles.button,
-              { 
-                backgroundColor: colors.primary,
-                marginTop: 30 
-              }
-            ]} 
-            onPress={handleNext}
-            activeOpacity={0.8}
-          >
-            <Text style={globalStyles.buttonText}>
-              Next
-            </Text>
-          </TouchableOpacity>
+            <View style={styles.bottomContent}>
+              {/* Next Button */}
+              <TouchableOpacity 
+                style={[
+                  globalStyles.button,
+                  { 
+                    backgroundColor: colors.primary,
+                  }
+                ]} 
+                onPress={handleNext}
+                activeOpacity={0.8}
+              >
+                <Text style={globalStyles.buttonText}>
+                  Next
+                </Text>
+              </TouchableOpacity>
 
-          {/* Privacy Link */}
-          <TouchableOpacity style={styles.privacyContainer}>
-            <Text style={styles.privacyText}>
-              <Text style={styles.privacyLink}>Learn more</Text>
-              {' '}here about how we protect your privacy.
-            </Text>
-          </TouchableOpacity>
+              {/* Privacy Link */}
+              <TouchableOpacity style={styles.privacyContainer}>
+                <Text style={styles.privacyText}>
+                  <Text style={styles.privacyLink}>Learn more</Text>
+                  {' '}here about how we protect your privacy.
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </StackedCard>
       </LinearGradient>
     </SafeAreaView>
@@ -141,6 +146,13 @@ const styles = {
     fontSize: 16,
     fontWeight: '500',
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  topContent: {
+    flex: 1,
+  },
   selectedCountryContainer: {
     marginVertical: 20,
   },
@@ -162,6 +174,9 @@ const styles = {
     color: colors.black,
     flex: 1,
     fontWeight: '500',
+  },
+  bottomContent: {
+    paddingBottom: 20,
   },
   privacyContainer: {
     marginTop: 20,

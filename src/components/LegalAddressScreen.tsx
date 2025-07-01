@@ -93,97 +93,100 @@ const LegalAddressScreen = ({ navigation, route }) => {
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <ScrollView 
-            style={{ flex: 1 }}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flexGrow: 1 }}
-          >
-            <StackedCard>
-              <Text style={globalStyles.title}>What's your legal address?</Text>
-              <Text style={globalStyles.subtitle}>
-                Type your address
-              </Text>
-
-              {/* Address Input Fields */}
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Address (Area and Street)"
-                  placeholderTextColor={colors.gray}
-                  value={addressData.street}
-                  onChangeText={(value) => updateField('street', value)}
-                  multiline={true}
-                  numberOfLines={2}
-                />
-                
-                <TextInput
-                  style={styles.input}
-                  placeholder="City/ District/ Town"
-                  placeholderTextColor={colors.gray}
-                  value={addressData.city}
-                  onChangeText={(value) => updateField('city', value)}
-                />
-                
-                <TextInput
-                  style={styles.input}
-                  placeholder="State"
-                  placeholderTextColor={colors.gray}
-                  value={addressData.state}
-                  onChangeText={(value) => updateField('state', value)}
-                />
-                
-                <View style={styles.zipCodeContainer}>
-                  <Text style={styles.zipCodeLabel}>Zip Code</Text>
-                  <TextInput
-                    style={[styles.input, { marginTop: 8 }]}_
-                    placeholder="Enter your zipcode"
-                    placeholderTextColor={colors.gray}
-                    value={addressData.zipCode}
-                    onChangeText={(value) => updateField('zipCode', value)}
-                    keyboardType="numeric"
-                  />
-                </View>
-                
-                <View style={styles.countryContainer}>
-                  <Text style={styles.countryLabel}>Country</Text>
-                  <TextInput
-                    style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}_
-                    value={addressData.country}
-                    editable={false}
-                  />
-                </View>
-              </View>
-
-              {/* Next Button */}
-              <TouchableOpacity 
-                style={[
-                  globalStyles.button,
-                  { 
-                    backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
-                    marginTop: 'auto' 
-                  }
-                ]} 
-                onPress={handleNext}
-                activeOpacity={0.8}
-                disabled={!isFormValid()}
+          <StackedCard>
+            <View style={styles.contentContainer}>
+              <ScrollView 
+                style={styles.scrollContent}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ flexGrow: 1 }}
               >
-                <Text style={[
-                  globalStyles.buttonText,
-                  { color: isFormValid() ? colors.white : colors.gray }
-                ]}>
-                  Next
+                <Text style={globalStyles.title}>What's your legal address?</Text>
+                <Text style={globalStyles.subtitle}>
+                  Type your address
                 </Text>
-              </TouchableOpacity>
 
-              {/* Privacy Link */}
-              <TouchableOpacity style={styles.privacyContainer}>
-                <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text>
-                  {' '}here about how we protect your privacy.
-                </Text>
-              </TouchableOpacity>
-            </StackedCard>
-          </ScrollView>
+                {/* Address Input Fields */}
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Address (Area and Street)"
+                    placeholderTextColor={colors.gray}
+                    value={addressData.street}
+                    onChangeText={(value) => updateField('street', value)}
+                    multiline={true}
+                    numberOfLines={2}
+                  />
+                  
+                  <TextInput
+                    style={styles.input}
+                    placeholder="City/ District/ Town"
+                    placeholderTextColor={colors.gray}
+                    value={addressData.city}
+                    onChangeText={(value) => updateField('city', value)}
+                  />
+                  
+                  <TextInput
+                    style={styles.input}
+                    placeholder="State"
+                    placeholderTextColor={colors.gray}
+                    value={addressData.state}
+                    onChangeText={(value) => updateField('state', value)}
+                  />
+                  
+                  <View style={styles.zipCodeContainer}>
+                    <Text style={styles.zipCodeLabel}>Zip Code</Text>
+                    <TextInput
+                      style={[styles.input, { marginTop: 8 }]}
+                      placeholder="Enter your zipcode"
+                      placeholderTextColor={colors.gray}
+                      value={addressData.zipCode}
+                      onChangeText={(value) => updateField('zipCode', value)}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                  
+                  <View style={styles.countryContainer}>
+                    <Text style={styles.countryLabel}>Country</Text>
+                    <TextInput
+                      style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}
+                      value={addressData.country}
+                      editable={false}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
+
+              <View style={styles.bottomContent}>
+                {/* Next Button */}
+                <TouchableOpacity 
+                  style={[
+                    globalStyles.button,
+                    { 
+                      backgroundColor: isFormValid() ? colors.primary : colors.lightGray,
+                    }
+                  ]} 
+                  onPress={handleNext}
+                  activeOpacity={0.8}
+                  disabled={!isFormValid()}
+                >
+                  <Text style={[
+                    globalStyles.buttonText,
+                    { color: isFormValid() ? colors.white : colors.gray }
+                  ]}>
+                    Next
+                  </Text>
+                </TouchableOpacity>
+
+                {/* Privacy Link */}
+                <TouchableOpacity style={styles.privacyContainer}>
+                  <Text style={styles.privacyText}>
+                    <Text style={styles.privacyLink}>Learn more</Text>
+                    {' '}here about how we protect your privacy.
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </StackedCard>
         </KeyboardAvoidingView>
       </LinearGradient>
     </SafeAreaView>
@@ -226,6 +229,12 @@ const styles = {
     fontSize: 16,
     fontWeight: '500',
   },
+  contentContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    flex: 1,
+  },
   inputContainer: {
     marginVertical: 20,
   },
@@ -256,10 +265,13 @@ const styles = {
     color: colors.black,
     fontWeight: '500',
   },
+  bottomContent: {
+    paddingBottom: 20,
+    paddingTop: 20,
+  },
   privacyContainer: {
     marginTop: 20,
     alignItems: 'center',
-    paddingBottom: 20,
   },
   privacyText: {
     fontSize: 14,

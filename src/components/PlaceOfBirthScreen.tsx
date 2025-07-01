@@ -76,68 +76,75 @@ const PlaceOfBirthScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
-          <StackedCard>
-            <Text style={globalStyles.title}>Where you were born?</Text>
-            <Text style={globalStyles.subtitle}>
-              Enter the place of birth that's on your passport
-            </Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="City/ District/ Town"
-              placeholderTextColor={colors.gray}
-              value={city}
-              onChangeText={setCity}
-            />
-
-            <DropDownPicker
-              open={open}
-              value={country}
-              items={items}
-              setOpen={setOpen}
-              setValue={setCountry}
-              setItems={setItems}
-              placeholder="Select your country"
-              style={styles.dropdown}
-              dropDownContainerStyle={styles.dropdownList}
-              textStyle={{ fontSize: 16, color: colors.black }}
-              placeholderStyle={{ color: colors.gray, fontSize: 16 }}
-              listMode="MODAL"
-              containerStyle={{ marginBottom: 20 }}
-            />
-
-            <CustomCheckbox
-              label="Same as legal address."
-              value={isSameAsLegal}
-              onValueChange={setIsSameAsLegal}
-            />
-
-            <TouchableOpacity 
-              style={[
-                globalStyles.button,
-                { 
-                  backgroundColor: isFormValid() ? colors.primary : '#A7D7B9',
-                  marginTop: 30 
-                }
-              ]} 
-              onPress={handleNext}
-              activeOpacity={0.8}
-              disabled={!isFormValid()}
+        <StackedCard>
+          <View style={styles.contentContainer}>
+            <ScrollView 
+              contentContainerStyle={{ flexGrow: 1 }} 
+              keyboardShouldPersistTaps="handled"
+              style={styles.scrollContent}
             >
-              <Text style={globalStyles.buttonText}>
-                {isFormValid() ? 'Next' : 'Confirm'}
+              <Text style={globalStyles.title}>Where you were born?</Text>
+              <Text style={globalStyles.subtitle}>
+                Enter the place of birth that's on your passport
               </Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={styles.privacyContainer}>
-              <Text style={styles.privacyText}>
-                <Text style={styles.privacyLink}>Learn more</Text>
-                {' '}here about how we protect your privacy.
-              </Text>
-            </TouchableOpacity>
-          </StackedCard>
-        </ScrollView>
+              <TextInput
+                style={styles.input}
+                placeholder="City/ District/ Town"
+                placeholderTextColor={colors.gray}
+                value={city}
+                onChangeText={setCity}
+              />
+
+              <DropDownPicker
+                open={open}
+                value={country}
+                items={items}
+                setOpen={setOpen}
+                setValue={setCountry}
+                setItems={setItems}
+                placeholder="Select your country"
+                style={styles.dropdown}
+                dropDownContainerStyle={styles.dropdownList}
+                textStyle={{ fontSize: 16, color: colors.black }}
+                placeholderStyle={{ color: colors.gray, fontSize: 16 }}
+                listMode="MODAL"
+                containerStyle={{ marginBottom: 20 }}
+              />
+
+              <CustomCheckbox
+                label="Same as legal address."
+                value={isSameAsLegal}
+                onValueChange={setIsSameAsLegal}
+              />
+            </ScrollView>
+
+            <View style={styles.bottomContent}>
+              <TouchableOpacity 
+                style={[
+                  globalStyles.button,
+                  { 
+                    backgroundColor: isFormValid() ? colors.primary : '#A7D7B9',
+                  }
+                ]} 
+                onPress={handleNext}
+                activeOpacity={0.8}
+                disabled={!isFormValid()}
+              >
+                <Text style={globalStyles.buttonText}>
+                  {isFormValid() ? 'Next' : 'Confirm'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.privacyContainer}>
+                <Text style={styles.privacyText}>
+                  <Text style={styles.privacyLink}>Learn more</Text>
+                  {' '}here about how we protect your privacy.
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -178,6 +185,12 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontWeight: '500',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    flex: 1,
   },
   input: {
     backgroundColor: colors.background,
@@ -225,6 +238,10 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 14,
     color: colors.gray,
+  },
+  bottomContent: {
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   privacyContainer: {
     marginTop: 20,

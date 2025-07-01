@@ -86,65 +86,70 @@ const CountrySelectionScreen = ({ navigation, route }) => {
 
         {/* Content Card */}
         <StackedCard>
-          <Text style={globalStyles.title}>What's your country?</Text>
-          <Text style={globalStyles.subtitle}>
-            Select your country of citizenship
-          </Text>
+          <View style={styles.contentContainer}>
+            <View style={styles.topContent}>
+              <Text style={globalStyles.title}>What's your country?</Text>
+              <Text style={globalStyles.subtitle}>
+                Select your country of citizenship
+              </Text>
 
-          {/* Dropdown */}
-          <View style={styles.dropdownContainer}>
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              placeholder="Select your country"
-              style={styles.dropdown}
-              dropDownContainerStyle={styles.dropdownList}
-              textStyle={styles.dropdownText}
-              placeholderStyle={styles.placeholderStyle}
-              arrowIconStyle={styles.arrowIcon}
-              tickIconStyle={styles.tickIcon}
-              selectedItemContainerStyle={styles.selectedItemContainer}
-              listMode="SCROLLVIEW"
-              scrollViewProps={{
-                nestedScrollEnabled: true,
-              }}
-            />
+              {/* Dropdown */}
+              <View style={styles.dropdownContainer}>
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  placeholder="Select your country"
+                  style={styles.dropdown}
+                  dropDownContainerStyle={styles.dropdownList}
+                  textStyle={styles.dropdownText}
+                  placeholderStyle={styles.placeholderStyle}
+                  arrowIconStyle={styles.arrowIcon}
+                  tickIconStyle={styles.tickIcon}
+                  selectedItemContainerStyle={styles.selectedItemContainer}
+                  listMode="SCROLLVIEW"
+                  scrollViewProps={{
+                    nestedScrollEnabled: true,
+                  }}
+                />
+              </View>
+            </View>
+
+            <View style={styles.bottomContent}>
+              {/* Confirm Button */}
+              <TouchableOpacity
+                style={[
+                  globalStyles.button,
+                  {
+                    backgroundColor: value ? colors.primary : colors.lightGray,
+                  },
+                ]}
+                onPress={handleConfirm}
+                activeOpacity={0.8}
+                disabled={!value}
+              >
+                <Text
+                  style={[
+                    globalStyles.buttonText,
+                    { color: value ? colors.white : colors.gray },
+                  ]}
+                >
+                  Confirm
+                </Text>
+              </TouchableOpacity>
+
+              {/* Privacy Link */}
+              <TouchableOpacity style={styles.privacyContainer}>
+                <Text style={styles.privacyText}>
+                  <Text style={styles.privacyLink}>Learn more</Text> here about how
+                  we protect your privacy.
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          {/* Confirm Button */}
-          <TouchableOpacity
-            style={[
-              globalStyles.button,
-              {
-                backgroundColor: value ? colors.primary : colors.lightGray,
-                marginTop: 40,
-              },
-            ]}
-            onPress={handleConfirm}
-            activeOpacity={0.8}
-            disabled={!value}
-          >
-            <Text
-              style={[
-                globalStyles.buttonText,
-                { color: value ? colors.white : colors.gray },
-              ]}
-            >
-              Confirm
-            </Text>
-          </TouchableOpacity>
-
-          {/* Privacy Link */}
-          <TouchableOpacity style={styles.privacyContainer}>
-            <Text style={styles.privacyText}>
-              <Text style={styles.privacyLink}>Learn more</Text> here about how
-              we protect your privacy.
-            </Text>
-          </TouchableOpacity>
         </StackedCard>
       </LinearGradient>
     </SafeAreaView>
@@ -182,6 +187,13 @@ const styles = {
     fontSize: 16,
     fontWeight: "500",
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  topContent: {
+    flex: 1,
+  },
   dropdownContainer: {
     marginVertical: 20,
     zIndex: 1000,
@@ -218,6 +230,9 @@ const styles = {
   },
   selectedItemContainer: {
     backgroundColor: colors.background,
+  },
+  bottomContent: {
+    paddingBottom: 20,
   },
   privacyContainer: {
     marginTop: 20,

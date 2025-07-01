@@ -73,8 +73,13 @@ const PhoneNumberScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
-            <StackedCard>
+        <StackedCard>
+          <View style={styles.contentContainer}>
+            <ScrollView 
+              contentContainerStyle={{ flexGrow: 1 }} 
+              keyboardShouldPersistTaps="handled"
+              style={styles.scrollContent}
+            >
               <Text style={globalStyles.title}>What's your phone number?</Text>
               <Text style={globalStyles.subtitle}>
                 Enter your registered phone number.
@@ -117,13 +122,14 @@ const PhoneNumberScreen = ({ navigation }) => {
                 value={isWhatsappAvailable}
                 onValueChange={setIsWhatsappAvailable}
               />
+            </ScrollView>
 
+            <View style={styles.bottomContent}>
               <TouchableOpacity 
                 style={[
                   globalStyles.button,
                   { 
                     backgroundColor: isFormValid() ? colors.primary : '#A7D7B9',
-                    marginTop: 30 
                   }
                 ]} 
                 onPress={handleNext}
@@ -141,8 +147,9 @@ const PhoneNumberScreen = ({ navigation }) => {
                   {' '}here about how we protect your privacy.
                 </Text>
               </TouchableOpacity>
-            </StackedCard>
-        </ScrollView>
+            </View>
+          </View>
+        </StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -183,6 +190,12 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontWeight: '500',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    flex: 1,
   },
   phoneInputContainer: {
     flexDirection: 'row',
@@ -250,6 +263,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.gray,
     flex: 1,
+  },
+  bottomContent: {
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   privacyContainer: {
     marginTop: 20,
