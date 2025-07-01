@@ -118,10 +118,10 @@ const AddressInputScreen = ({ navigation, route }) => {
 const styles = {
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 45,
     paddingBottom: 10,
   },
   backButton: {
@@ -135,9 +135,11 @@ const styles = {
   stepText: {
     color: colors.white,
     fontSize: 16,
+    marginLeft: 8,
     fontWeight: "500",
   },
   skipHeaderButton: {
+    marginLeft: "auto",
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
