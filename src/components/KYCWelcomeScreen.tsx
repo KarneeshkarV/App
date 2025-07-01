@@ -39,7 +39,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
+        colors={['#276040', '#3EC899']}
         style={globalStyles.gradientContainer}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
