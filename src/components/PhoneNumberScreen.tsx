@@ -13,6 +13,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const CustomCheckbox = ({ label, value, onValueChange }) => (
   <TouchableOpacity style={styles.checkboxContainer} onPress={() => onValueChange(!value)} activeOpacity={0.7}>
@@ -73,7 +74,7 @@ const PhoneNumberScreen = ({ navigation }) => {
         </View>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
-            <View style={[globalStyles.card, { marginTop: 40, zIndex: 1000 }]}>
+            <StackedCard>
               <Text style={globalStyles.title}>What's your phone number?</Text>
               <Text style={globalStyles.subtitle}>
                 Enter your registered phone number.
@@ -140,7 +141,7 @@ const PhoneNumberScreen = ({ navigation }) => {
                   {' '}here about how we protect your privacy.
                 </Text>
               </TouchableOpacity>
-            </View>
+            </StackedCard>
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

@@ -9,6 +9,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const KYCWelcomeScreen = ({ navigation }) => {
   const documents = [
@@ -65,7 +66,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
         </View>
 
         {/* Content Card */}
-        <View style={globalStyles.card}>
+ <StackedCard>
           <Text style={globalStyles.title}>Let's Verify KYC</Text>
           <Text style={globalStyles.subtitle}>
             Keep the following documents ready
@@ -97,7 +98,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
           >
             <Text style={globalStyles.buttonText}>Let's Start</Text>
           </TouchableOpacity>
-        </View>
+</StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );

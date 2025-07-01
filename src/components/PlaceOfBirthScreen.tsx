@@ -14,6 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const CustomCheckbox = ({ label, value, onValueChange }) => (
   <TouchableOpacity style={styles.checkboxContainer} onPress={() => onValueChange(!value)} activeOpacity={0.7}>
@@ -76,7 +77,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
         </View>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }} keyboardShouldPersistTaps="handled">
-          <View style={[globalStyles.card, { marginTop: 40, zIndex: 1000 }]}>
+          <StackedCard>
             <Text style={globalStyles.title}>Where you were born?</Text>
             <Text style={globalStyles.subtitle}>
               Enter the place of birth that's on your passport
@@ -135,7 +136,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
                 {' '}here about how we protect your privacy.
               </Text>
             </TouchableOpacity>
-          </View>
+          </StackedCard>
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

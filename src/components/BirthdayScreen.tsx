@@ -15,6 +15,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const BirthdayScreen = ({ navigation }) => {
   const [dob, setDob] = useState({ day: '', month: '', year: '' });
@@ -79,7 +80,7 @@ const BirthdayScreen = ({ navigation }) => {
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
             keyboardShouldPersistTaps="handled"
           >
-            <View style={[globalStyles.card, { marginTop: 40 }]}>
+            <StackedCard>
               <Text style={globalStyles.title}>What's your birthday?</Text>
               <Text style={globalStyles.subtitle}>
                 Enter DOB as on your government issued ID.
@@ -141,7 +142,7 @@ const BirthdayScreen = ({ navigation }) => {
                   {' '}here about how we protect your privacy.
                 </Text>
               </TouchableOpacity>
-            </View>
+            </StackedCard>
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>

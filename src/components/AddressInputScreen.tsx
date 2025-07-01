@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const AddressInputScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
@@ -59,7 +60,7 @@ const AddressInputScreen = ({ navigation, route }) => {
         </View>
 
         {/* Content Card */}
-        <View style={[globalStyles.card, { marginTop: 40 }]}>
+        <StackedCard>
           <Text style={globalStyles.title}>Select your country of citizenship</Text>
           <Text style={globalStyles.subtitle}>
             Type your address
@@ -103,7 +104,7 @@ const AddressInputScreen = ({ navigation, route }) => {
               {' '}here about how we protect your privacy.
             </Text>
           </TouchableOpacity>
-        </View>
+        </StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );

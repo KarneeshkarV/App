@@ -14,6 +14,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { globalStyles, colors } from '../styles/globalStyles';
+import StackedCard from './StackedCard';
 
 const LegalAddressScreen = ({ navigation, route }) => {
   const { selectedCountry } = route.params || {};
@@ -22,7 +23,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
     city: '',
     state: '',
     zipCode: '',
-    country: selectedCountry?.label?.replace(/^[^\s]+/, '').trim() || 'United Arab Emirates',
+    country: selectedCountry?.label?.replace(/^[^]+/, '').trim() || 'United Arab Emirates',
   });
 
   const handleBack = () => {
@@ -97,7 +98,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}
           >
-            <View style={[globalStyles.card, { marginTop: 100, flex: 1 }]}>
+            <StackedCard>
               <Text style={globalStyles.title}>What's your legal address?</Text>
               <Text style={globalStyles.subtitle}>
                 Type your address
@@ -134,7 +135,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
                 <View style={styles.zipCodeContainer}>
                   <Text style={styles.zipCodeLabel}>Zip Code</Text>
                   <TextInput
-                    style={[styles.input, { marginTop: 8 }]}
+                    style={[styles.input, { marginTop: 8 }]}_
                     placeholder="Enter your zipcode"
                     placeholderTextColor={colors.gray}
                     value={addressData.zipCode}
@@ -146,7 +147,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
                 <View style={styles.countryContainer}>
                   <Text style={styles.countryLabel}>Country</Text>
                   <TextInput
-                    style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}
+                    style={[styles.input, { marginTop: 8, backgroundColor: '#F0F0F0' }]}_
                     value={addressData.country}
                     editable={false}
                   />
@@ -181,7 +182,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
                   {' '}here about how we protect your privacy.
                 </Text>
               </TouchableOpacity>
-            </View>
+            </StackedCard>
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>

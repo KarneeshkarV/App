@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { globalStyles, colors } from "../styles/globalStyles";
+import StackedCard from "./StackedCard";
 
 const CountrySelectionScreen = ({ navigation, route }) => {
   const [open, setOpen] = useState(false);
@@ -84,7 +85,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
         </View>
 
         {/* Content Card */}
-        <View style={[globalStyles.card, { marginTop: 40 }]}>
+        <StackedCard>
           <Text style={globalStyles.title}>What's your country?</Text>
           <Text style={globalStyles.subtitle}>
             Select your country of citizenship
@@ -144,7 +145,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
               we protect your privacy.
             </Text>
           </TouchableOpacity>
-        </View>
+        </StackedCard>
       </LinearGradient>
     </SafeAreaView>
   );
