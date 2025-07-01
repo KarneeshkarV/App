@@ -88,7 +88,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       <GradientBackground>
-        {/* Header */}
+        {/* Header - Only back button now */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
@@ -96,17 +96,11 @@ const KYCWelcomeScreen = ({ navigation }) => {
           >
             <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.skipHeaderButton}
-            onPress={handleSkip}
-          >
-            <Text style={styles.skipHeaderText}>Skip</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <BlurView intensity={10} tint="light" style={styles.logoWrapper}>
+          <BlurView intensity={0} tint="light" style={styles.logoWrapper}>
             <ShieldCheckIcon />
           </BlurView>
         </View>
@@ -114,6 +108,16 @@ const KYCWelcomeScreen = ({ navigation }) => {
         {/* Content Card */}
         <StackedCard topOffset={370}>
           <View style={styles.contentContainer}>
+            {/* Skip button at the top of the card */}
+            <View style={styles.cardHeader}>
+              <TouchableOpacity
+                style={styles.skipButton}
+                onPress={handleSkip}
+              >
+                <Text style={styles.skipText}>Skip</Text>
+              </TouchableOpacity>
+            </View>
+
             <View style={styles.topContent}>
               <Text style={globalStyles.title}>Let's Verify KYC</Text>
               <Text style={globalStyles.subtitle}>
@@ -134,6 +138,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
                 ))}
               </View>
             </View>
+            
             <View style={styles.bottomContent}>
               <TouchableOpacity
                 style={globalStyles.button}
@@ -153,7 +158,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
 const styles = {
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start", // Changed from space-between to flex-start
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 20,
@@ -167,15 +172,6 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  skipHeaderButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  skipHeaderText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
   logoContainer: {
     alignItems: "center",
     paddingVertical: 40,
@@ -183,7 +179,7 @@ const styles = {
   logoWrapper: {
     width: 150,
     height: 150,
-    borderRadius: 60,
+    borderRadius: 150,
     backgroundColor: "rgba(255, 255, 255, 0.25)",
     alignItems: "center",
     justifyContent: "center",
@@ -197,6 +193,21 @@ const styles = {
   contentContainer: {
     flex: 1,
     justifyContent: "space-between",
+  },
+  cardHeader: {
+    alignItems: "flex-end",
+    marginBottom: 10,
+  },
+  skipButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.05)", // Subtle background
+  },
+  skipText: {
+    color: colors.primary || "#000", // Use primary color or black
+    fontSize: 16,
+    fontWeight: "500",
   },
   topContent: {
     flex: 1,

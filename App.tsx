@@ -1,7 +1,12 @@
-import 'react-native-gesture-handler'; // Recommended to be at the top
-import React from 'react';
-import AppNavigator from './src/navigation/AppNavigator';
+import "react-native-gesture-handler";
+import React from "react";
+import AppNavigator from "./src/navigation/AppNavigator";
+import { KycProvider } from "./src/context/KYCContext";
 
 export default function App() {
-  return <AppNavigator />;
+  return (
+    <KycProvider>
+      <AppNavigator />
+    </KycProvider>
+  );
 }

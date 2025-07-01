@@ -1,10 +1,11 @@
 import React from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { BlurView } from "expo-blur";
 import { colors } from "../styles/globalStyles";
 
 /**
- * A three-layer “bottom-sheet” that mimics stacked cards.
- * Simply wrap your screen’s previous <card> contents with <StackedCard>.
+ * A three-layer "bottom-sheet" that mimics stacked cards with subtle blur effect.
+ * Simply wrap your screen's previous <card> contents with <StackedCard>.
  */
 const StackedCard: React.FC<{
   style?: StyleProp<ViewStyle>;
@@ -15,11 +16,13 @@ const StackedCard: React.FC<{
       style={[styles.container, { top: topOffset }]}
       pointerEvents="box-none"
     >
-      {/*   Far-back layer   */}
+      {/*   Far-back layer with subtle blur   */}
       <View style={styles.layerTwo} />
-      {/*   Mid layer        */}
+
+      {/*   Mid layer with subtle blur        */}
       <View style={styles.layerOne} />
-      {/*   Front/content    */}
+
+      {/*   Front/content with clean white background    */}
       <View style={[styles.topLayer, style]}>{children}</View>
     </View>
   );
@@ -49,28 +52,34 @@ const styles = StyleSheet.create({
   },
   layerTwo: {
     position: "absolute",
-    bottom: 24,
-    width: "90%",
-    height: "60%",
+    bottom: 16,
+    width: "92%",
+    height: "85%",
     borderRadius: SHEET_RADIUS,
-    backgroundColor: colors.cardBackground,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
     ...sheetShadow,
+    opacity: 0.6,
   },
   layerOne: {
     position: "absolute",
-    bottom: 12,
-    width: "94%",
-    height: "97%",
+    bottom: 8,
+    width: "96%",
+    height: "92%",
     borderRadius: SHEET_RADIUS,
-    backgroundColor: colors.cardBackground,
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     ...sheetShadow,
+    opacity: 0.8,
   },
   topLayer: {
-    width: "96%",
+    width: "100%",
     height: "100%",
     borderRadius: SHEET_RADIUS,
-    backgroundColor: colors.cardBackground,
+    backgroundColor: "#FFFFFF",
     padding: 24,
-    ...sheetShadow,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 20,
+    elevation: 12,
   },
 });
